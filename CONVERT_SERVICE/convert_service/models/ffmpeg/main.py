@@ -35,5 +35,3 @@
 
 
 # En nustro output de imagenes %04d = 4 ceros equivale a 2,70 hrs, %05d = 5 ceros equivale a 27 hrs
-# Curso de ffmpeg como instalarlo y usarlo https://www.youtube.com/watch?v=yieG9DZQ_vM&ab_channel=k0nze
-# ffmpeg version n4.4-151-g5e61fce832-20210912
