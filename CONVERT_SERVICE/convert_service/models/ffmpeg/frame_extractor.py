@@ -11,9 +11,6 @@
 #
 
 class FrameExtractor:
-    def __init__(self):
-        pass
-
     def build(self, parameter):
         video_input = parameter.get_video_path()                 # Ubicacion de nuestro video
         images_output = parameter.get_img_output_path()          # Ubicacion de nuestros fotrogramas
