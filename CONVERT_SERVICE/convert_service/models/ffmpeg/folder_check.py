@@ -15,9 +15,6 @@ import shutil
 
 
 class FolderCheck:
-    def __init__(self):
-        pass
-
     # Verifica si la carpeta images existe y la crea, o borra el contenido
     @staticmethod
     def execute():
