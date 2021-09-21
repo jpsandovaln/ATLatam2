@@ -26,7 +26,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from convert_service.views import index, upload, download
+from convert_service.views import index
+from convert_service.views import upload
+from convert_service.views import download
 from django.contrib import admin
 from django.urls import path
 
