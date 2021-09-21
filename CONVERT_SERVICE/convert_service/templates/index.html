@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+
+        <title>
+            Titulo
+        </title>
+    </head>
+
+
+    <body>
+        
+        <h1>{{Date}}</h1>
+
+        <p>{{Text}}</p>
+
+        <fieldset>
+            <form form action="/upload/" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <section>
+                    <label for="Video_Path">Video path: </label>
+                    <input type="file" name="file" id="Video_Path" placeholder="Enter the path" required>
+                </section>
+
+                <section>
+                    <label for="Word_Search">Word: </label>
+                    <input type="text" name="word" id="Word_Search" placeholder="Enter the word" required>
+                </section>
+
+                <label for="Lista_Modelos">List Models:</label>
+                <select name="model" id="Lista_Modelos" required>
+                    <option value = "" disabled selected>--Seleccione una opción--</option>
+
+                    {% for modelo in Lista_Modelos %}
+                        <option>{{modelo}}</option>
+                    {% endfor %}
+
+                </select>
+
+                <section>
+                    <label for="Percentage">Percentage: </label>
+                    <input type="number" name="percentage" id="Percentage" placeholder="Enter the Percentage" required>
+                </section>
+                
+                <input type="submit" value="Enviar">
+            </form>
+        </fieldset>
+
+    </body>
+</html>
