@@ -1,0 +1,3 @@
+COMPILER/**/*.pyc
+COMPILER/venv/*
+
