@@ -10,7 +10,6 @@
 # with Jalasoft.
 #
 
-
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -19,6 +18,12 @@ from pathlib import Path
 import mimetypes
 import datetime
 import json
+import os
+
+from models.ffmpeg.frame_extractor import FrameExtractor
+from models.ffmpeg.python_parameters import PythonParameters
+from models.ffmpeg.folder_check import FolderCheck
+from models.ffmpeg.fmex_execute import Execute
 
 #In the file settings.py in the list of TEMPLATES (line 54) in the part of DIR, I specified the folder of the templates. So you only use loader.get_template('name_file.html') to load a template.
 #In the file settings.py, in the line 130 i specified the path to save the files.
@@ -32,19 +37,19 @@ import json
 
 
 
-#User Interface
+# User Interface
 def index(request):
 
     date = datetime.datetime.now()
     list_models = ["ResNet50","VGG16"]
     text = "Complete the fields below:"
 
-    dictionary = {"Text": text, "Date":date, "Lista_Modelos":list_models}
+    dictionary = {"Text": text, "Date": date, "Lista_Modelos": list_models}
     return render(request, 'index.html', dictionary)
 
 
 
-@csrf_exempt #Unsafe way - Implement csrf token in the nexts commits. Please read resource #5.
+@csrf_exempt # Unsafe way - Implement csrf token in the nexts commits. Please read resource #5.
 def upload(request):
 
     if request.method == 'POST':
@@ -58,6 +63,29 @@ def upload(request):
         diccionario['word'] = request.POST["word"]
         diccionario['model'] = request.POST["model"]
         diccionario['percentage'] = request.POST["percentage"]
+
+        # Set the path to the requested file
+        filename = diccionario['file']
+        BASE_DIR = Path(__file__).resolve().parent.parent
+        filepath = str(BASE_DIR) + "/media/" + filename
+
+        # Revisamos que la carpeta images exista o la creamos
+        folderCheck = FolderCheck
+        folderCheck.execute()
+
+        # Pasamos los parametros
+        pythonParameters = PythonParameters(filepath, 'images/%04d.jpg')  # Video input, Frames Output
+
+        # Iniciamos el extractor de frames
+        frameExtractor = FrameExtractor()
+
+        # Le damos los parametros y lo guardamos en la variable command
+        command = frameExtractor.build(pythonParameters)
+
+        # Ejecutamos nuestra clase fmex_execute
+        execute = Execute(command)
+        print(execute.run())
+
 
         # I convert the dictionary to json
         return HttpResponse(json.dumps(diccionario), 'application/json')
@@ -84,4 +112,5 @@ def download(request):
         # Set the HTTP header for sending to browser
         response['Content-Disposition'] = "attachment; filename=%s" % filename
         # Return the response value
+
         return response
