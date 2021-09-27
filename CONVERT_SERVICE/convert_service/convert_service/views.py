@@ -69,20 +69,20 @@ def upload(request):
         BASE_DIR = Path(__file__).resolve().parent.parent
         filepath = str(BASE_DIR) + "/media/" + filename
 
-        # Revisamos que la carpeta images exista o la creamos
+        # We check that the images folder exists or we create it
         folderCheck = FolderCheck
         folderCheck.execute()
 
-        # Pasamos los parametros
+        # We pass the parameters
         pythonParameters = PythonParameters(filepath, 'images/%04d.jpg')  # Video input, Frames Output
 
-        # Iniciamos el extractor de frames
+        # We start the frame extractor
         frameExtractor = FrameExtractor()
 
-        # Le damos los parametros y lo guardamos en la variable command
+        # We give it the parameters and save it in the command variable
         command = frameExtractor.build(pythonParameters)
 
-        # Ejecutamos nuestra clase fmex_execute
+        # We execute our class fmex_execute to start the process
         execute = Execute(command)
         print(execute.run())
 
