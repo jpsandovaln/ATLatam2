@@ -1,3 +1,7 @@
 COMPILER/**/*.pyc
+COMPILER/.idea/*
 COMPILER/venv/*
+CONVERT_SERVICE/venv/*
+CONVERT_SERVICE/.dea/*
+CONVERT_SERVICE/**/*.pyc
 
