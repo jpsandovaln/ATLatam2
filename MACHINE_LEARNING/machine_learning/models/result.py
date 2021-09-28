@@ -12,13 +12,10 @@
 # noinspection SpellCheckingInspection
 class Result:
     """ Almacena ls información de los resultados de la detección de objetos"""
-    def __init__(self, imagen, porcentaje, modelo, prediccion):
+    def __init__(self, imagen, modelo, predictions):
         self.imagen = imagen
-        self.porcentaje = porcentaje
         self.modelo = modelo
-        self.prediccion = prediccion
+        self.predictions_list = predictions
 
-    def __str__(self):
-        cadena = "la imagen {} contiene {} con un {:.4} % usando el {}".format(
-            self.imagen, self.prediccion, self.porcentaje, self.modelo)
-        print(cadena)
+    def as_dict(self):
+        return {'imagen': self.imagen, 'modelo': self.modelo, 'predictions_list': self.predictions_list}

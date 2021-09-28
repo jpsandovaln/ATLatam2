@@ -22,4 +22,4 @@ if __name__ == '__main__':
     lista = prueba.predict(modelo)
 
     for element in lista:
-        element.__str__()
+        print(element.as_dict())

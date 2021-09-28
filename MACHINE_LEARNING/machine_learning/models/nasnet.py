@@ -35,7 +35,7 @@ class NasNet:
         # Predicción
         preds = self.model.predict(processed_image)
         # Seleccionar las dos primeras predicciones
-        pred_class = decode_predictions(preds, top=2)[0]
+        pred_class = decode_predictions(preds, top=2)[0][0]
 
-        return pred_class
+        return [(pred_class[1], pred_class[2])]
 
