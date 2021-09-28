@@ -28,7 +28,6 @@ class Converter(View):
 
             # Execute the ffmpeg model and zip compresor
             ffmpegexecute(filepath)
-            # compress_files('images')
 
             return HttpResponse(json.dumps(filename), 'application/json')
 
