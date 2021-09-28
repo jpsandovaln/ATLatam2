@@ -10,9 +10,9 @@
 # with Jalasoft.
 #
 from keras.preprocessing import image
-from keras.applications.resnet50 import ResNet50
-from keras.applications.resnet50 import preprocess_input
-from keras.applications.resnet50 import decode_predictions
+from keras.applications.resnet import ResNet50
+from keras.applications.resnet import preprocess_input
+from keras.applications.resnet import decode_predictions
 import numpy as np
 
 

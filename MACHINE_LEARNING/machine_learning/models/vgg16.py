@@ -22,6 +22,7 @@ class Vgg16:
     """Modelo VGG16"""
     def __init__(self):
         # Define el modelo preentrenado VGG16
+        self.name = 'Vgg16'
         self.model = VGG16(weights='imagenet', include_top=True)
 
 

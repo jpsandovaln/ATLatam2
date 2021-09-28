@@ -14,13 +14,14 @@ from nasnet import NasNet
 from resnet import ResNet
 from result import Result
 from vgg16 import Vgg16
+from yolo import Yolo
 
 
 # noinspection SpellCheckingInspection
 class Prediccion:
     """Lleva a cabo la detección de objeto en todas las imágenes de un directorio"""
     def __init__(self, folder):
-        self.modelos = {'nasnet': NasNet(), 'resnet': ResNet(), 'vgg': Vgg16()}
+        self.modelos = {'nasnet': NasNet(), 'resnet': ResNet(), 'vgg': Vgg16(), 'yolo': Yolo()}
         self.folder = folder
         self.imagenes = os.listdir(folder)
 
