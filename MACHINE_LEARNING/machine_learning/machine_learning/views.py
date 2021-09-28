@@ -1,16 +1,27 @@
+#
+# @resnet.py Copyright (c) 2021 Jalasoft.
+# Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of
+# Jalasoft, ("Confidential Information"). You shall not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with Jalasoft.
+#
 from django.core.files.storage import FileSystemStorage
 from django.views import View
+from django.http import JsonResponse
 from django.http import HttpResponse
+import json
 from pathlib import Path
 from models.prediccion import Prediccion
 from zipfile import ZipFile
-from models.result import Result
-import json
-from django.http import JsonResponse
 
 
 class Recognizer(View):
-
+    """ Machine Learning Endpoint, call machine learning modules with
+        receive parameters and recognize objects from a zipped image folder"""
     def post(self, request):
 
         uploaded_file = request.FILES['file']
@@ -27,11 +38,9 @@ class Recognizer(View):
         with ZipFile('/'.join((filepath1, uploaded_file.name)), 'r') as zipObj:
             zipObj.extractall(filepath1)
 
-        # Call ML Prediction
+        # Call ML Prediction and get results
         result = Prediccion(filepath1+'/'+uploaded_file.name[:-4], word, percentage).predict(model)
-
-        #testing = {i: pred.as_dict() for i, pred in enumerate(result)}
         testing = [pred.as_dict() for pred in result]
-        print(testing)
-        return HttpResponse(json.dumps(testing), 'application/json')
-        # return JsonResponse(testing, safe=False)
+
+        # return HttpResponse(json.dumps(testing), 'application/json')
+        return JsonResponse(testing, safe=False)
