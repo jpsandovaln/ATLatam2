@@ -33,9 +33,7 @@ class Prediccion:
         for imagen in self.imagenes:
             # Se ejecuta la predicción sobre cada imagen del directorio provisto
             pre = model.predict('/'.join((self.folder, imagen)))
-            # Se conservan solo las predicciones con más de 70% de precisión como objetos Result()
-            if pre[0][2] > 0.7:
-                resultado = Result(imagen, pre[0][2] * 100, model.__doc__, pre[0][1])
-                list_obj.append(resultado)
+            resultado = Result(imagen, model.name, pre)
+            list_obj.append(resultado)
 
         return list_obj

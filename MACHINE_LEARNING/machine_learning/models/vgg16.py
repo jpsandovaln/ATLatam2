@@ -35,6 +35,6 @@ class Vgg16:
         processed_image = preprocess_input(image_batch)
         # convertir las probabilidades en etiquetas de clase
         preds = self.model.predict(processed_image)
-        label = decode_predictions(preds)[0]
+        pred_class = decode_predictions(preds)[0][0]
         # recuperar el resultado mas probable, por ejemplo, el mas alto
-        return label
+        return [(pred_class[1], pred_class[2])]
