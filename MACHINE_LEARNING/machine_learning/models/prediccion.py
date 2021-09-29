@@ -10,7 +10,6 @@
 # with Jalasoft.
 #
 import os
-
 from .nasnet import NasNet
 from .resnet import ResNet
 from .result import Result
