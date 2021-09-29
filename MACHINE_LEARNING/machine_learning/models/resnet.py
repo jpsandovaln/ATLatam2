@@ -16,7 +16,6 @@ from keras.applications.resnet import decode_predictions
 import numpy as np
 
 
-# noinspection SpellCheckingInspection
 class ResNet:
     """Modelo ResNet50"""
     def __init__(self):
@@ -24,7 +23,6 @@ class ResNet:
         self.name = 'ResNet50'
         self.model = ResNet50(weights='imagenet', include_top=True)
 
-    # noinspection SpellCheckingInspection
     # Método que realiza la predicción de objetos en una imagen
     def predict(self, img_path):
         # Preprocesamiento
