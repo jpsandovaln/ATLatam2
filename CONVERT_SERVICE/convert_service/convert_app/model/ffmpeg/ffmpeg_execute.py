@@ -18,24 +18,17 @@ import os
 
 
 def ffmpegexecute(videopath):
-    # Revisamos que la carpeta images exista o la creamos
     folderCheck = FolderCheck
     folderCheck.execute()
-
-    # Pasamos los parametros
     pythonParameters = PythonParameters(videopath, 'images/%04d.jpg')  # Video input, Frames Output
-
-    # Iniciamos el extractor de frames
     frameExtractor = FrameExtractor()
-
-    # Le damos los parametros y lo guardamos en la variable command
     command = frameExtractor.build(pythonParameters)
 
-    # Ejecutamos nuestra clase fmex_execute
+    # Execute class fmex_execute
     execute = Execute(command)
     execute.run()
 
     return command
 
 
-# En nustro output de imagenes %04d = 4 ceros equivale a 2,70 hrs, %05d = 5 ceros equivale a 27 hrs
+# In our output of images %04d = 4 zeros equals 2,70 hrs, %05d = 5 zeros equals 27 hrs

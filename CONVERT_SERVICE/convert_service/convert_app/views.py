@@ -19,9 +19,6 @@ from .model.ffmpeg.img_compresor import zip_dir
 import json
 
 
-# Create your views here.
-
-
 class Converter(View):
 
     def post(self, request):
