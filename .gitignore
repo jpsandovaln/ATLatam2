@@ -4,4 +4,9 @@ COMPILER/venv/*
 CONVERT_SERVICE/venv/*
 CONVERT_SERVICE/.dea/*
 CONVERT_SERVICE/**/*.pyc
+__pycache__
+CONVERT_SERVICE/convert_service/images/*
+CONVERT_SERVICE/convert_service/media/*
+CONVERT_SERVICE/convert_service/zip/*
+
 
