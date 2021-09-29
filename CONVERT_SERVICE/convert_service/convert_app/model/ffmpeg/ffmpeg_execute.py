@@ -14,7 +14,6 @@ from .frame_extractor import FrameExtractor
 from .python_parameters import PythonParameters
 from .folder_check import FolderCheck
 from .frameExtractor_execute import Execute
-from .img_compresor import zip_dir
 import os
 
 
@@ -35,7 +34,8 @@ def ffmpegexecute(videopath):
     # Ejecutamos nuestra clase fmex_execute
     execute = Execute(command)
     execute.run()
-    zip_dir('images')
+
+    return command
 
 
 # En nustro output de imagenes %04d = 4 ceros equivale a 2,70 hrs, %05d = 5 ceros equivale a 27 hrs

@@ -12,6 +12,7 @@
 
 import zipfile
 import os
+import shutil
 
 
 def zip_dir(dir_path):
@@ -26,4 +27,5 @@ def zip_dir(dir_path):
         for file in files:
             zip.write(os.path.join(dir_path, file), f_path + file)
     zip.close()
-    return new_file
+
+    return shutil.move(new_file, 'zip')

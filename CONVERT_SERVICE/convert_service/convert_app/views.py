@@ -3,6 +3,7 @@ from pathlib import Path
 from django.views import View
 from django.http import HttpResponse
 from .model.ffmpeg.ffmpeg_execute import ffmpegexecute
+from .model.ffmpeg.img_compresor import zip_dir
 import json
 
 
@@ -28,6 +29,7 @@ class Converter(View):
 
             # Execute the ffmpeg model and zip compresor
             ffmpegexecute(filepath)
+            zip_dir('images', filename)
 
             return HttpResponse(json.dumps(filename), 'application/json')
 
