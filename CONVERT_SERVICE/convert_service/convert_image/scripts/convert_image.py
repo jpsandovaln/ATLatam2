@@ -75,14 +75,20 @@ class Param:
 class ConvertImage:
 
     def convert(self, param):
+
         with Image(filename='./assets/minions.png') as img:
+
             img.format = 'jpg'
+
             if param.get_blur():
                 img.blur(radius=0, sigma=6)
+
             if param.get_grayscale():
                 img.type = 'grayscale'
+
             if param.get_adaptive_sharpen():
                 img.adaptive_sharpen(radius=10, sigma=9)
+
             if param.get_resize():
                 width = param.get_resize()[0]
                 height = param.get_resize()[1]
