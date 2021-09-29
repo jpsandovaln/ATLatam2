@@ -10,10 +10,10 @@
 # with Jalasoft.
 #
 import os
-from nasnet import NasNet
-from resnet import ResNet
-from result import Result
-from vgg16 import Vgg16
+from .nasnet import NasNet
+from .resnet import ResNet
+from .result import Result
+from .vgg16 import Vgg16
 
 
 # noinspection SpellCheckingInspection
