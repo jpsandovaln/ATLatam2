@@ -6,3 +6,6 @@ CONVERT_SERVICE/.idea/*
 CONVERT_SERVICE/**/*.pyc
 __pycache__
 CONVERT_SERVICE/convert_service/server.bat
+CONVERT_SERVICE/convert_service/images
+CONVERT_SERVICE/convert_service/media
+
