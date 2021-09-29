@@ -1,5 +1,5 @@
 #
-# @fmex_execute.py Copyright (c) 2021 Jalasoft.
+# @frameExtractor_execute.py Copyright (c) 2021 Jalasoft.
 # 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 # with Jalasoft.
 #
 
-import os
+import subprocess
 
 
 # Ejecutable para iniciar el frame extractor
@@ -19,4 +19,5 @@ class Execute:
         self._cmd = cmd
 
     def run(self):
-        return os.system(self._cmd)
+        result = subprocess.check_output(self._cmd, shell=True)
+        return result

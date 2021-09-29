@@ -2,6 +2,7 @@ COMPILER/**/*.pyc
 COMPILER/.idea/*
 COMPILER/venv/*
 CONVERT_SERVICE/venv/*
-CONVERT_SERVICE/.dea/*
+CONVERT_SERVICE/.idea/*
 CONVERT_SERVICE/**/*.pyc
-
+__pycache__
+CONVERT_SERVICE/convert_service/server.bat

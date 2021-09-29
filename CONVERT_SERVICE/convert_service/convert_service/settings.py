@@ -1,16 +1,3 @@
-#
-# @video_converter.py Copyright (c) 2021 Jalasoft.
-# 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
-# All rights reserved.
-#
-# This software is the confidential and proprietary information of
-# Jalasoft, ("Confidential Information").  You shall not
-# disclose such Confidential Information and shall use it only in
-# accordance with the terms of the license agreement you entered into
-# with Jalasoft.
-#
-
-
 """
 Django settings for convert_service project.
 
@@ -23,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#sn+=^da_ei_ri#bd3yw&dz9@wwy1kqr@0ivsho&wxcj-9%k4!'
+SECRET_KEY = 'django-insecure--#nd()e$g4j9+p)l7gfjh+&p9m_irwokkm8yz0ofkm86o!z!&d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -68,7 +55,7 @@ ROOT_URLCONF = 'convert_service.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR)],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,8 +125,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # ----------------------------- EXTRA -----------------------------
-#Here the files will be saved
+# Here the files will be saved
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
