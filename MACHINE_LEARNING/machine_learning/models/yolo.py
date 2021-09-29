@@ -14,6 +14,7 @@ import cv2
 from PIL import Image
 import numpy as np
 
+
 class Yolo:
     def __init__(self):
         self.name = 'Yolo'
