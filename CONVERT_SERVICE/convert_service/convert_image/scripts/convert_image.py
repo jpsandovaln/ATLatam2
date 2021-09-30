@@ -76,7 +76,8 @@ class ConvertImage:
 
     def convert(self, param):
 
-        with Image(filename='./assets/minions.png') as img:
+        # Change "IMAGE_PATH" to  image to convert
+        with Image(filename='IMAGE_PATH') as img:
 
             img.format = 'jpg'
 
