@@ -19,23 +19,16 @@ from keras.applications.vgg16 import VGG16
 
 
 class Vgg16:
-    """Modelo VGG16"""
+    """Model VGG16"""
     def __init__(self):
-        # Define el modelo preentrenado VGG16
         self.name = 'Vgg16'
         self.model = VGG16(weights='imagenet', include_top=True)
 
-
-    def predict(self,img_path):
+    def predict(self, img_path):
         original = load_img(img_path, target_size=(224, 224))
-        # remodelar los datos para el modelo
         numpy_image = img_to_array(original)
-        # preparar la imagen para el modelo VGG
         image_batch = numpy_image.reshape((1, numpy_image.shape[0], numpy_image.shape[1], numpy_image.shape[2]))
-        # predecir la probabilidad en todas las clases de salida
         processed_image = preprocess_input(image_batch)
-        # convertir las probabilidades en etiquetas de clase
         preds = self.model.predict(processed_image)
         pred_class = decode_predictions(preds)[0][0]
-        # recuperar el resultado mas probable, por ejemplo, el mas alto
         return [(pred_class[1], pred_class[2])]

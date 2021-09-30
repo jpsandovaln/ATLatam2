@@ -3,6 +3,7 @@ COMPILER/venv/*
 CONVERT_SERVICE/venv/*
 CONVERT_SERVICE/.idea
 __pycache__
+.vscode
 CONVERT_SERVICE/convert_service/server.bat
 CONVERT_SERVICE/convert_service/images
 CONVERT_SERVICE/convert_service/media

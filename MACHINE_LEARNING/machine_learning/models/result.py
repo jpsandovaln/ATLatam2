@@ -1,5 +1,5 @@
 #
-# @resnet.py Copyright (c) 2021 Jalasoft.
+# @result.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -9,13 +9,13 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-# noinspection SpellCheckingInspection
+
 class Result:
-    """ Almacena ls información de los resultados de la detección de objetos"""
-    def __init__(self, imagen, modelo, predictions):
-        self.imagen = imagen
-        self.modelo = modelo
+    """ Stores the information of the object detection results"""
+    def __init__(self, image, model, predictions):
+        self.image = image
+        self.model = model
         self.predictions_list = predictions
 
     def as_dict(self):
-        return {'imagen': self.imagen, 'modelo': self.modelo, 'predictions_list': self.predictions_list}
+        return {'image': self.image, 'model': self.model, 'predictions_list': self.predictions_list}

@@ -1,5 +1,5 @@
 #
-# @resnet.py Copyright (c) 2021 Jalasoft.
+# @main.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -9,17 +9,13 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-from prediccion import Prediccion
+from prediction import Prediction
 
-# noinspection SpellCheckingInspection
 if __name__ == '__main__':
-    # Definir el modelo de detección de objetos ("nasnet", "vgg", "resnet")
-    modelo = "vgg"
-    nombre_Carpeta = "images"
-    #Crear un objeto tipo Prediccion que identificará cada imagen suministrada con el modelo seleccionado
-    prueba = Prediccion(nombre_Carpeta)
-    #Tener una lista de objetos con la información resultante de la detección
-    lista = prueba.predict(modelo)
+    model = "vgg"
+    folder_name = "images"
+    test = Prediction(folder_name)
+    list = test.predict(model)
 
-    for element in lista:
+    for element in list:
         print(element.as_dict())
