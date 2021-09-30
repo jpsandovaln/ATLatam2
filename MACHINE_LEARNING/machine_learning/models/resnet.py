@@ -22,7 +22,6 @@ class ResNet:
         self.name = 'ResNet50'
         self.model = ResNet50(weights='imagenet', include_top=True)
 
-    # Método que realiza la predicción de objetos en una imagen
     def predict(self, img_path):
         # Preprocessing
         original = image.load_img(img_path, target_size=(224, 224))
