@@ -5,4 +5,4 @@ CONVERT_SERVICE/venv/*
 CONVERT_SERVICE/.dea/*
 CONVERT_SERVICE/**/*.pyc
 __pycache__
-
+.vscode
