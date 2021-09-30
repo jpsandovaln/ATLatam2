@@ -14,6 +14,3 @@ class JavaCommand(Command):
 
         command = JAVA_COMPILER + parameter.get_file_path() + JAVA_AND + JAVA_EXECUTE + JAVA_CP_PARAM + parameter.get_folder_path() + 'EjemploJava8'
         return command
-
-    def extra(self):
-        pass
