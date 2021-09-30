@@ -1,5 +1,5 @@
 #
-# @fmex_execute.py Copyright (c) 2021 Jalasoft.
+# @urls.py Copyright (c) 2021 Jalasoft.
 # 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
 # All rights reserved.
 #
@@ -10,13 +10,11 @@
 # with Jalasoft.
 #
 
-import os
+from django.urls import path
+from . import views
+from django.views.decorators.csrf import csrf_exempt
 
 
-# Ejecutable para iniciar el frame extractor
-class Execute:
-    def __init__(self, cmd):
-        self._cmd = cmd
-
-    def run(self):
-        return os.system(self._cmd)
+urlpatterns = [
+    path('', csrf_exempt(views.Converter.as_view())),
+]

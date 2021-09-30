@@ -1,8 +1,13 @@
-COMPILER/**/*.pyc
 COMPILER/.idea/*
 COMPILER/venv/*
 CONVERT_SERVICE/venv/*
-CONVERT_SERVICE/.dea/*
-CONVERT_SERVICE/**/*.pyc
+CONVERT_SERVICE/.idea
 __pycache__
-
+CONVERT_SERVICE/convert_service/server.bat
+CONVERT_SERVICE/convert_service/images
+CONVERT_SERVICE/convert_service/media
+CONVERT_SERVICE/convert_service/zip
+CONVERT_SERVICE/convert_service/convert_image/assets/*.jpg
+CONVERT_SERVICE/convert_service/convert_image/assets/*.png
+CONVERT_SERVICE/convert_service/convert_image/result/*.jpg
+CONVERT_SERVICE/convert_service/convert_image/result/*.png
