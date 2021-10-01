@@ -27,6 +27,7 @@ class Prediction:
 
     def predict(self, model):
         model = self.models[model]
+        model.start()
         list_obj = []
         for image in self.images:
             pre = model.predict('/'.join((self.folder, image)))

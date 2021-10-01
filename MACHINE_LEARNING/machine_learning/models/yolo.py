@@ -13,15 +13,19 @@
 import cv2
 from PIL import Image
 import numpy as np
+from MACHINE_LEARNING.machine_learning.models.model import Model
 
 
-class Yolo:
+class Yolo(Model):
     def __init__(self):
+        pass
+
+    def start(self):
         self.name = 'Yolo'
 
         # Constants
         self.wH = 320
-        self.confThreshold = 0.5
+        self.confThreshold = 0.1
         self.nmsThreshold = 0.3
 
         self.classNames = [

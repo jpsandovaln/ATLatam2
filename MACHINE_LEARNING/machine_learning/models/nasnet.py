@@ -9,6 +9,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
+from MACHINE_LEARNING.machine_learning.models.model import Model
 from keras.applications.nasnet import NASNetLarge
 from keras.applications.nasnet import preprocess_input
 from keras.applications.nasnet import decode_predictions
@@ -16,9 +17,12 @@ from keras.preprocessing import image
 import numpy as np
 
 
-class NasNet:
+class NasNet(Model):
     """Model NasNetLarge"""
     def __init__(self):
+        pass
+
+    def start(self):
         self.name = 'NasNet'
         self.model = NASNetLarge(weights='imagenet', include_top=True)
 
