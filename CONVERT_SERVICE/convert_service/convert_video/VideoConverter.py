@@ -60,7 +60,7 @@ def VideoConverter(par1: bool,
         a = os.system(cmd)
 
 
-VideoConverter(False, True, False, False, True, 'video_1.mp4', 'video_1.mp4')
+VideoConverter(False, True, False, False, False, 'video2.mp4', 'video2.mp4')
 
 
 
