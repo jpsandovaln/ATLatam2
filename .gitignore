@@ -4,6 +4,10 @@ CONVERT_SERVICE/venv/*
 CONVERT_SERVICE/.idea
 __pycache__
 .vscode
+.idea
+yolov3.cfg
+yolov3.weights
+MACHINE_LEARNING/machine_learning/models/images
 CONVERT_SERVICE/convert_service/server.bat
 CONVERT_SERVICE/convert_service/images
 CONVERT_SERVICE/convert_service/media

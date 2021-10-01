@@ -12,9 +12,7 @@ https://pjreddie.com/darknet/yolo/
 5. When you click on cfg file this will open a GitHub page. If you don't know how to download a GitHub file please check this link:
 https://stackoverflow.com/questions/4604663/download-single-files-from-github
 
-6. Once you have all the necessary files, move the files to the same level of this file.
-
-7. Si todo está bien el modelo Yolo debería de andar bien.
+6. Once you have all the necessary files, move the files to the same level of this file and run the program.
 
 ---
 
