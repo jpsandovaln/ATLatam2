@@ -25,10 +25,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ffmpeg/', include('convert_app.urls')),
-]
+    path('convertvideo/', include('convert_video.urls'))
+] + static("/media", document_root=settings.MEDIA_ROOT)     # KB: https://stackoverflow.com/questions/63437229/how-to-show-list-of-file-urls-stored-in-media-folder-using-django-rest-framework
