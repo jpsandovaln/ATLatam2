@@ -1,93 +1,103 @@
-import glob
+#
+# @videoConverter.py Copyright (c) 2021 Jalasoft.
+# 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of
+# Jalasoft, ("Confidential Information"). You shall not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with Jalasoft.
+#
+
+
 import os
 import uuid
-from django.contrib.sites.shortcuts import get_current_site
+
 from django.core.files.storage import FileSystemStorage
 from django.views import View
 from django.http import HttpResponse
 from pathlib import Path
 import json
-
-# Create your views here.
 from .model.VideoConverterModel import VideoConverterModel
+from .util.Utilities import Utilities
 
 
 class VideoConverter(View):
     def post(self, request):
         if request.method == 'POST':
-            uploaded_file1 = request.FILES['file']
-            uploaded_file2 = request.FILES['file2']
-            par1 = request.POST.get('par1', "0")
-            par2 = request.POST.get('par2', "0")
-            par3 = request.POST.get('par3', "0")
-            par4 = request.POST.get('par4', "0")
-            par5 = request.POST.get('par5', "0")
 
+            # Generating a unique identifier as a session key
             session_key = str(uuid.uuid4().hex)
-            print(session_key + " INIT")
+
+            # get Base directory for project
+            base_dir = Path(__file__).resolve().parent.parent
+
             try:
+                uploaded_file1 = request.FILES['file']
+                uploaded_file2 = request.FILES['file2']
+                vs_horizontally = request.POST.get('horizontally', "0")
+                vs_vertically = request.POST.get('vertically', "0")
+                vs_remove_audio = request.POST.get('remove_audio', "0")
+                vs_rotate = request.POST.get('par4', "0")
+                vs_reduce_video = request.POST.get('par5', "0")
+
                 filename1 = session_key + "_" + uploaded_file1.name
                 filename2 = session_key + "_" + uploaded_file2.name
 
+                # Save the file
                 fs = FileSystemStorage()
                 fs.save(filename1, uploaded_file1)
                 fs.save(filename2, uploaded_file2)
 
-                base_dir = Path(__file__).resolve().parent.parent
+                # Set the path to the requested file
                 full_filename1 = str(base_dir) + "/media/" + filename1
                 full_filename2 = str(base_dir) + "/media/" + filename2
 
+                # Call the class to convert the video
                 video = VideoConverterModel()
-                commands = video.GetCommandsForVideo(base_dir, session_key, par1 == "1", par2 == "1", par3 == "1",
-                                                par4 == "1", par5 == "1", full_filename1, full_filename2)
-
-                print(session_key + " SAVED3")
-
+                commands = video.GetCommandsForVideo(base_dir, session_key, vs_horizontally == "1", vs_vertically == "1",
+                                                     vs_remove_audio == "1", vs_rotate == "1", vs_reduce_video == "1",
+                                                     full_filename1, full_filename2)
+                # Executing the commands obtained
                 for cmd in commands:
-                    print(session_key + " EXECUTING: " + cmd)
                     if cmd.startswith("rename"):
                         os.rename(cmd.split('|')[1], cmd.split('|')[2])  # KB: https://pynative.com/python-rename-file/
                     else:
                         os.system(cmd)
 
-                # Delete extra files - KB: https://pynative.com/python-delete-files-and-directories/
+                # Deleting extra files - KB: https://pynative.com/python-delete-files-and-directories/
                 pattern = str(base_dir) + "/media/" + session_key + "_*"
-                files = glob.glob(pattern)
-                # deleting the files with pattern
-                for file in files:
-                    print(session_key + " DELETING FILE " + file)
-                    os.remove(file)
+                Utilities.delete_files_pattern(pattern)
 
-                # KB: https://try2explore.com/questions/10019689
-                relative_file = "http://" + str(get_current_site(request).domain) + "/media/" + session_key + ".mp4"
+                # Setting up the route to the final result - KB: https://try2explore.com/questions/10019689
+                relative_file = Utilities.generate_final_url(request, session_key + ".mp4")
 
                 result = {
                     "id": session_key,
                     "status": "OK",
                     "videoOutput": str(relative_file),
                     "params": {
-                        "par1": par1,
-                        "par2": par2,
-                        "par3": par3,
-                        "par4": par4,
-                        "par5": par5
+                        "horizontally": vs_horizontally,
+                        "vertically": vs_vertically,
+                        "remove_audio": vs_remove_audio,
+                        "rotate": vs_rotate,
+                        "reduce_video": vs_reduce_video
                     }
                 }
-
+                # Result in json
                 return HttpResponse(json.dumps(result), 'application/json')
+
             except:
                 # Delete extra files - KB: https://pynative.com/python-delete-files-and-directories/
                 pattern = str(base_dir) + "/media/" + session_key + "_*"
-                files = glob.glob(pattern)
-                # deleting the files with pattern
-                for file in files:
-                    print("DELETING FILE " + file)
-                    # os.remove(file)
+                Utilities.delete_files_pattern(pattern)
 
                 result_error = {
                     "id": session_key,
                     "status": "error"
                 }
+                # Result in json
                 return HttpResponse(json.dumps(result_error), 'application/json')
 
         return HttpResponse("Please, used method POST")

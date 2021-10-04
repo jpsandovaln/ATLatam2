@@ -4,5 +4,4 @@ from . import views
 
 urlpatterns = [
     path('', csrf_exempt(views.VideoConverter.as_view()))
-
 ]
