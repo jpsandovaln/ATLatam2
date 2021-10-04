@@ -34,15 +34,19 @@ class Converter(View):
             # Save the file
             fs.save(uploaded_file.name, uploaded_file)
             file = uploaded_file.name
+            logger.info('Save the file')
 
             # Set the path to the requested file
             filename = file
             BASE_DIR = Path(__file__).resolve().parent.parent
             filepath = str(BASE_DIR) + "/media/" + filename
+            logger.info('Set the path to the requested file')
 
             # Execute the ffmpeg model and zip compresor
             ffmpegexecute(filepath)
+            logger.info('Execute the ffmpeg model')
             zip_dir('images', filename)
+            logger.info('Execute the Zip compresor')
 
             return HttpResponse(json.dumps(filename), 'application/json')
 
