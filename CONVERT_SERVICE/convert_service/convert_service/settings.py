@@ -144,29 +144,29 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ----------------------------- LOGGING -----------------------------
 # Here are the logs from the program
-LOGGING ={
-    'version':1.0,
-    'loggers':{
-        'django':{
-            'handlers':['file','file2'],
-            'level':'DEBUG'
+LOGGING = {
+    'version': 1.0,
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'file2'],
+            'level': 'DEBUG'
         }
     },
-    'handlers':{
-        'file':{
-            'level':'INFO',
+    'handlers': {
+        'file': {
+            'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename':'./logs/views.log',
-            'formatter':'simpleRe',
+            'filename': './logs/views.log',
+            'formatter': 'simpleRe',
         },
-        'file2':{
-            'level':'DEBUG',
+        'file2': {
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename':'./logs/debug.log',
-            'formatter':'simpleRe',
+            'filename': './logs/debug.log',
+            'formatter': 'simpleRe',
         }
     },
-    'formatters':{
+    'formatters': {
         'simpleRe': {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
             'style': '{',

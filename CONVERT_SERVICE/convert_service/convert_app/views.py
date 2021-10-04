@@ -24,7 +24,7 @@ logger = logging.getLogger('django')
 
 
 class Converter(View):
-
+    """ This Function Upload the file and saves it, then executes ffmpeg and zip compressor"""
     def post(self, request):
         if request.method == 'POST':
             # Upload the file
@@ -47,7 +47,7 @@ class Converter(View):
             ffmpegexecute(filepath)
             logger.info('Execute the ffmpeg model')
             zip_dir('images', filename)
-            logger.info('Execute the Zip compresor')
+            logger.info('Execute the Zip compressor')
 
             return HttpResponse(json.dumps(filename), 'application/json')
 
