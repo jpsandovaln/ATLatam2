@@ -24,23 +24,27 @@ from .util.Utilities import Utilities
 
 
 class VideoConverter(View):
+    """ Video converter endpoint """
+
+    # Method running the video converter
     def post(self, request):
         if request.method == 'POST':
 
             # Generating a unique identifier as a session key
             session_key = str(uuid.uuid4().hex)
 
-            # get Base directory for project
+            # Get base directory for the file
             base_dir = Path(__file__).resolve().parent.parent
 
             try:
+                # Upload files and parameters
                 uploaded_file1 = request.FILES['file']
                 uploaded_file2 = request.FILES['file2']
                 vs_horizontally = request.POST.get('horizontally', "0")
                 vs_vertically = request.POST.get('vertically', "0")
                 vs_remove_audio = request.POST.get('remove_audio', "0")
-                vs_rotate = request.POST.get('par4', "0")
-                vs_reduce_video = request.POST.get('par5', "0")
+                vs_rotate = request.POST.get('rotate', "0")
+                vs_reduce_video = request.POST.get('reduce_video', "0")
 
                 filename1 = session_key + "_" + uploaded_file1.name
                 filename2 = session_key + "_" + uploaded_file2.name
@@ -62,7 +66,8 @@ class VideoConverter(View):
                 # Executing the commands obtained
                 for cmd in commands:
                     if cmd.startswith("rename"):
-                        os.rename(cmd.split('|')[1], cmd.split('|')[2])  # KB: https://pynative.com/python-rename-file/
+                        # KB: https://pynative.com/python-rename-file/
+                        os.rename(cmd.split('|')[1], cmd.split('|')[2])
                     else:
                         os.system(cmd)
 
