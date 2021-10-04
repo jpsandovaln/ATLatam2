@@ -17,7 +17,10 @@ from django.http import HttpResponse
 from .model.ffmpeg.ffmpeg_execute import ffmpegexecute
 from .model.ffmpeg.img_compresor import zip_dir
 import json
+import logging
 
+
+logger = logging.getLogger('django')
 
 class Converter(View):
 
@@ -26,6 +29,7 @@ class Converter(View):
             # Upload the file
             uploaded_file = request.FILES['file']
             fs = FileSystemStorage()
+            logger.info('Upload the file')
 
             # Save the file
             fs.save(uploaded_file.name, uploaded_file)
