@@ -13,7 +13,7 @@
 import cv2
 from PIL import Image
 import numpy as np
-from MACHINE_LEARNING.machine_learning.models.model import Model
+from .model import Model
 
 
 class Yolo(Model):

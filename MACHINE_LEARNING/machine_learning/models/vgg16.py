@@ -11,7 +11,7 @@
 #
 
 
-from MACHINE_LEARNING.machine_learning.models.model import Model
+from .model import Model
 from keras.preprocessing.image import load_img
 from keras.preprocessing.image import img_to_array
 from keras.applications.vgg16 import preprocess_input

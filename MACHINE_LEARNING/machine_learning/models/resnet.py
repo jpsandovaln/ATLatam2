@@ -9,7 +9,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-from MACHINE_LEARNING.machine_learning.models.model import Model
+from .model import Model
 from keras.preprocessing import image
 from keras.applications.resnet import ResNet50
 from keras.applications.resnet import preprocess_input

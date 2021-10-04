@@ -9,7 +9,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-from MACHINE_LEARNING.machine_learning.models.model import Model
+from .model import Model
 from keras.applications.nasnet import NASNetLarge
 from keras.applications.nasnet import preprocess_input
 from keras.applications.nasnet import decode_predictions
