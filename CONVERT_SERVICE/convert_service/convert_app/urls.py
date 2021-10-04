@@ -16,5 +16,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
-    path('', csrf_exempt(views.Converter.as_view())),
+    path('ffmpeg/', csrf_exempt(views.Converter.as_view())),
+    path('image/', csrf_exempt(views.ConverterImage.as_view())),
 ]

@@ -16,6 +16,9 @@ from django.views import View
 from django.http import HttpResponse
 from .model.ffmpeg.ffmpeg_execute import ffmpegexecute
 from .model.ffmpeg.img_compresor import zip_dir
+
+from .model.convert_image.convert_image import Param, ConvertImage
+
 import json
 
 
@@ -39,6 +42,40 @@ class Converter(View):
             # Execute the ffmpeg model and zip compresor
             ffmpegexecute(filepath)
             zip_dir('images', filename)
+
+            return HttpResponse(json.dumps(filename), 'application/json')
+
+        return HttpResponse("Please, used method POST")
+
+
+class ConverterImage(View):
+    def post(self, request):
+        if request.method == 'POST':
+            # Upload the file
+            uploaded_file = request.FILES['file']
+            grayscale = request.POST['grayscale']
+            print(grayscale)
+            fs = FileSystemStorage()
+
+            # Save the file
+            fs.save(uploaded_file.name, uploaded_file)
+            file = uploaded_file.name
+
+            # Set the path to the requested file
+            filename = file
+            BASE_DIR = Path(__file__).resolve().parent.parent
+            filepath = str(BASE_DIR) + "/media/" + filename
+
+            print(filepath)
+
+            image = ConvertImage()
+            param = Param(filepath, grayscale, False, False, False, False, False, False, False, False, False, False,
+                          False)
+            image.convert(param)
+
+            # Execute the ffmpeg model and zip compresor
+            # ffmpegexecute(filepath)
+            # zip_dir('images', filename)
 
             return HttpResponse(json.dumps(filename), 'application/json')
 

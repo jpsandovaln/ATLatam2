@@ -77,7 +77,9 @@ class ConvertImage:
     def convert(self, param):
 
         # Change "IMAGE_PATH" to  image to convert
-        with Image(filename='IMAGE_PATH') as img:
+        # with Image(filename='./minions.png') as img:
+
+        with Image(filename=param.get_filename()) as img:
 
             img.format = 'jpg'
 
@@ -91,8 +93,8 @@ class ConvertImage:
                 img.adaptive_sharpen(radius=10, sigma=9)
 
             if param.get_resize():
-                width = param.get_resize()[0]
-                height = param.get_resize()[1]
+                width = 300
+                height = 300
                 print(img.size)
                 img.resize(width, height)
                 print(img.size)
@@ -127,7 +129,7 @@ class ConvertImage:
             if param.get_vignette():
                 img.vignette(sigma=3, x=10, y=10)
 
-            img.save(filename='./results/img.jpg')
+            img.save(filename='D:\jalasoft\ATLatam2\CONVERT_SERVICE\convert_service/media/img.png')
 
     def png_to_jpg(self):
         with Image(filename='./assets/image.png') as img:
