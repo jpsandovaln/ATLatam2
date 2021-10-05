@@ -42,4 +42,10 @@ def zip_dir(dir_path, filename):
                 zip.write(os.path.join(dir_path, file))
         zip.close()
 
+    if os.path.isdir('zip' + '/' + new_file):
+        shutil.rmtree('zip' + '/' + new_file)
+
+    elif os.path.isfile('zip' + '/' + new_file):
+        os.remove('zip' + '/' + new_file)
+
     return shutil.move(new_file, 'zip')

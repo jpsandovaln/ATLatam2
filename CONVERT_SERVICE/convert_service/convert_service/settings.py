@@ -156,13 +156,13 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': './logs/views.log',
+            'filename': './views.log',
             'formatter': 'simpleRe',
         },
         'file2': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': './logs/debug.log',
+            'filename': './debug.log',
             'formatter': 'simpleRe',
         }
     },
