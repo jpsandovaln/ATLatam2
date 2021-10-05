@@ -105,3 +105,4 @@ class VideoConverter(View):
                 return HttpResponse(json.dumps(result_error), 'application/json')
 
         return HttpResponse("Please, used method POST")
+

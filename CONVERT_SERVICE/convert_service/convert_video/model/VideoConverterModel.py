@@ -1,5 +1,5 @@
 #
-# @videoConverter.py Copyright (c) 2021 Jalasoft.
+# @videoConverterModel.py Copyright (c) 2021 Jalasoft.
 # 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
 # All rights reserved.
 #
