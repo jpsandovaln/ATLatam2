@@ -141,3 +141,36 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Here the files will be saved
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# ----------------------------- LOGGING -----------------------------
+# Here are the logs from the program
+LOGGING = {
+    'version': 1.0,
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'file2'],
+            'level': 'DEBUG'
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': './logs/views.log',
+            'formatter': 'simpleRe',
+        },
+        'file2': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': './logs/debug.log',
+            'formatter': 'simpleRe',
+        }
+    },
+    'formatters': {
+        'simpleRe': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        }
+
+    }
+}
