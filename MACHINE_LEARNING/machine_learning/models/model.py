@@ -1,5 +1,5 @@
 #
-# @wsgi.py Copyright (c) 2021 Jalasoft.
+# @model.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -9,10 +9,15 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-import os
+from abc import ABC, abstractmethod
 
-from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'machine_learning.settings')
+class Model(ABC):
+    "The objective of this abstract class is that all the subclasses that inherit this class, implement these methods"
+    @abstractmethod
+    def predict(self):
+        pass
 
-application = get_wsgi_application()
+    @abstractmethod
+    def start(self):
+        pass
