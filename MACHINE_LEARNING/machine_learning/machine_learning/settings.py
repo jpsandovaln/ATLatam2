@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-36177g39%7b0ze8ofta*3#f6z)i_336gi)(trojam)1b%fzyk7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'machine_learning'
 ]
 
 MIDDLEWARE = [
@@ -75,8 +76,15 @@ WSGI_APPLICATION = 'machine_learning.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'machinelearning',
+        'USER': 'postgres',
+        'PASSWORD': 'hola',
+        'HOST': 'localhost',
+        'DATABASE_PORT': '5432',
+        'OPTIONS': {
+            'client_encoding': 'UTF8'
+             }
     }
 }
 
@@ -123,5 +131,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
