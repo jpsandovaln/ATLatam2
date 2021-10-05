@@ -19,7 +19,7 @@ class Compiler(View):
         version = request.POST['version']
         try:
             result = CompilerFacade.compile(language, 'D:/code/EjemploJava8.java', 'D:/code/ ',
-                                   'C:/"Program Files"/Java/jdk1.8.0_251/bin/')
+                                            'C:/"Program Files"/Java/jdk1.8.0_251/bin/')
+            return HttpResponse(result, "application/json")
         except Exception as error:
-            result = error
-        return HttpResponse(result, "application/json")
+            return HttpResponse(error, status=error.status)

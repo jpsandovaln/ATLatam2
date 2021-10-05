@@ -1,4 +1,5 @@
 import subprocess
+from ..exception.execute_exception import ExecuteException
 
 
 class Execute:
@@ -6,5 +7,8 @@ class Execute:
         self._cmd = cmd
 
     def run(self):
-        result = subprocess.check_output(self._cmd, shell=True)
+        try:
+            result = subprocess.check_output(self._cmd, shell=True)
+        except Execute as error:
+            raise ExecuteException(error)
         return result
