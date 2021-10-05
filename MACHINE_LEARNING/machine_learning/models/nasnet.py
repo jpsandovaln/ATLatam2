@@ -22,10 +22,12 @@ class NasNet(Model):
     def __init__(self):
         pass
 
+    # This function initialize the model
     def start(self):
         self.name = 'NasNet'
         self.model = NASNetLarge(weights='imagenet', include_top=True)
 
+    # This function tries to predict the objects
     def predict(self, img_path):
         # Preprocessing
         original = image.load_img(img_path, target_size=(331, 331))

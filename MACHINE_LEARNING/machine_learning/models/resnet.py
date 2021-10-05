@@ -22,10 +22,12 @@ class ResNet(Model):
     def __init__(self):
         pass
 
+    # This function initialize the model
     def start(self):
         self.name = 'ResNet50'
         self.model = ResNet50(weights='imagenet', include_top=True)
 
+    # This function tries to predict the objects
     def predict(self, img_path):
         # Preprocessing
         original = image.load_img(img_path, target_size=(224, 224))

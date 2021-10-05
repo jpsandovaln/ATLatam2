@@ -28,6 +28,7 @@ class Prediction:
         self.percentage = percentage
         self.images = os.listdir(folder)
 
+    # This function predicts the object according to the given percentage and word and return a list of objects
     def predict(self, model):
         model = self.models[model]
         model.start()
@@ -43,6 +44,7 @@ class Prediction:
 
         return list_obj
 
+    # This function converts the name of the file into a time format
     def __convert_time(self, name_img):
         index = name_img.find('.')
         name_img = int(name_img[:index])

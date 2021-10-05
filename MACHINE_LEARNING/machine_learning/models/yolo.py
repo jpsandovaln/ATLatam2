@@ -20,6 +20,7 @@ class Yolo(Model):
     def __init__(self):
         pass
 
+    # This function initialize the model
     def start(self):
         self.name = 'Yolo'
 
@@ -46,6 +47,7 @@ class Yolo(Model):
         self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
         self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
+    # This function tries to predict the objects
     def predict(self, img_path):
         image = Image.open(img_path)
         img = np.array(image)
@@ -59,6 +61,7 @@ class Yolo(Model):
 
         return self.__findObjects(outputs, img)
 
+    # This function finds the objects and try to reduce the duplicate objects
     def __findObjects(self, outputs, img):
         hT, wT, cT = img.shape
         bbox = []

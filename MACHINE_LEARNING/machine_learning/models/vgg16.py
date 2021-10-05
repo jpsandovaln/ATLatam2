@@ -24,10 +24,12 @@ class Vgg16(Model):
     def __init__(self):
         pass
 
+    # This function initialize the model
     def start(self):
         self.name = 'Vgg16'
         self.model = VGG16(weights='imagenet', include_top=True)
 
+    # This function tries to predict the objects
     def predict(self, img_path):
         original = load_img(img_path, target_size=(224, 224))
         numpy_image = img_to_array(original)
