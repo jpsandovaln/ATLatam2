@@ -1,5 +1,5 @@
 #
-# @videoConverter.py Copyright (c) 2021 Jalasoft.
+# @views.py Copyright (c) 2021 Jalasoft.
 # 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
 # All rights reserved.
 #
@@ -13,7 +13,6 @@
 
 import os
 import uuid
-
 from django.core.files.storage import FileSystemStorage
 from django.views import View
 from django.http import HttpResponse
