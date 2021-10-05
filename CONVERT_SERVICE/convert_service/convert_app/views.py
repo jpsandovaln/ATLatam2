@@ -18,8 +18,8 @@ from django.views import View
 from django.http import HttpResponse
 from .model.ffmpeg.ffmpeg_execute import ffmpegexecute
 from .model.ffmpeg.img_compresor import zip_dir
-
-from .model.convert_image.convert_image import Param, ConvertImage
+from .model.convert_image.convert_image import ConvertImage
+from .model.convert_image.convert_image_params import ConvertImageParams
 
 import json
 
@@ -82,9 +82,10 @@ class ImageConverter(View):
 
             # Create object image to convert image
             image = ConvertImage()
-            param = Param(filepath, grayscale, blur, adaptive_sharpen, resize, flip, flop, rotate, noise, charcoal,
-                          matrix, implode,
-                          vignette)
+            param = ConvertImageParams(filepath, grayscale, blur, adaptive_sharpen, resize, flip, flop, rotate, noise,
+                                       charcoal,
+                                       matrix, implode,
+                                       vignette)
             image.convert(param)
 
             # get download path
