@@ -17,7 +17,9 @@ class Compiler(View):
         fs.save(upload_file.name, upload_file)
         language = request.POST['language']
         version = request.POST['version']
-
-        result = CompilerFacade.compile('java', 'D:/code/EjemploJava8.java', 'D:/code/ ',
-                               'C:/"Program Files"/Java/jdk1.8.0_251/bin/')
-        return HttpResponse(result, "application/json")
+        try:
+            result = CompilerFacade.compile(language, 'D:/code/EjemploJava8.java', 'D:/code/ ',
+                                            'C:/"Program Files"/Java/jdk1.8.0_251/bin/')
+            return HttpResponse(result, "application/json")
+        except Exception as error:
+            return HttpResponse(error, status=error.status)

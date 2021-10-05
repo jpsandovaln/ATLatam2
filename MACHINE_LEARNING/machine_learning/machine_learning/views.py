@@ -1,5 +1,5 @@
 #
-# @resnet.py Copyright (c) 2021 Jalasoft.
+# @views.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -15,7 +15,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 import json
 from pathlib import Path
-from models.prediccion import Prediccion
+from models.prediction import Prediction
 from zipfile import ZipFile
 
 
@@ -39,7 +39,7 @@ class Recognizer(View):
             zipObj.extractall(filepath1)
 
         # Call ML Prediction and get results
-        result = Prediccion(filepath1+'/'+uploaded_file.name[:-4], word, percentage).predict(model)
+        result = Prediction(filepath1+'/'+uploaded_file.name[:-4], word, percentage).predict(model)
         testing = [pred.as_dict() for pred in result]
 
         # return HttpResponse(json.dumps(testing), 'application/json')

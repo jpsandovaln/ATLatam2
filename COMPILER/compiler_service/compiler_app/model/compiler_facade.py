@@ -8,8 +8,9 @@ class CompilerFacade:
         pass
 
     @staticmethod
-    def compile(language, file, folder, binary):
+    def compile(language, file, folder, binary) -> str:
         parameter = Parameter(file, folder, binary)
+        parameter.validate()
         command = CommandFactory.get_instance(language)
         build_command = command.build(parameter)
         execute = Execute(build_command)

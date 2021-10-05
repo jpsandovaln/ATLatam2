@@ -1,6 +1,9 @@
 from .java_command import JavaCommand
+from .java_command_proxy import JavaCommandProxy
 from .python_command import PythonCommand
 from .node_command_adapter import NodeCommandAdapter
+from ..exception.command_exception import CommandException
+
 
 
 class CommandFactory:
@@ -8,11 +11,13 @@ class CommandFactory:
         pass
 
     @staticmethod
-    def get_instance(language, file):
+    def get_instance(language):
         if language == "java":
-            command = JavaCommand()
+            return JavaCommand()
+        if language == "java_proxy":
+            return JavaCommandProxy()
         if language == "python":
-            command = PythonCommand()
+            return PythonCommand()
         if language == "node":
-            command = NodeCommandAdapter()
-        return command
+            return NodeCommandAdapter()
+        raise CommandException("Language not supported", "401", "Latam-02-8755")
