@@ -10,6 +10,8 @@
 # with Jalasoft.
 #
 
+from urllib import request
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.files.storage import FileSystemStorage
 from pathlib import Path
 from django.views import View
@@ -52,3 +54,4 @@ class Converter(View):
             return HttpResponse(json.dumps(filename), 'application/json')
 
         return HttpResponse("Please, used method POST")
+
