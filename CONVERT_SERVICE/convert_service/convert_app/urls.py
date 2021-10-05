@@ -10,12 +10,13 @@
 # with Jalasoft.
 #
 
+from django.conf.urls.static import static
 from django.urls import path
 from . import views
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
 
 urlpatterns = [
     path('ffmpeg/', csrf_exempt(views.Converter.as_view())),
-    path('image/', csrf_exempt(views.ConverterImage.as_view())),
-]
+    path('image/', csrf_exempt(views.ImageConverter.as_view())),
+] + static("/media", document_root=settings.MEDIA_ROOT)

@@ -9,6 +9,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
+import datetime
 
 from wand.image import Image
 from wand.display import display
@@ -72,72 +73,97 @@ class Param:
         return self.vignette
 
 
+"""Class to convert image with many params"""
 class ConvertImage:
+    final_path = ''
+
+    def get_final_path(self):
+        return self.final_path
+
+    def set_final_path(self, final_path):
+        self.final_path = final_path
 
     def convert(self, param):
 
-        # Change "IMAGE_PATH" to  image to convert
-        # with Image(filename='./minions.png') as img:
-
         with Image(filename=param.get_filename()) as img:
 
-            img.format = 'jpg'
-
+            # Blur effect
             if param.get_blur():
-                img.blur(radius=0, sigma=6)
+                blur = param.get_blur().split(",")
+                blur_radius = int(blur[0])
+                blur_sigma = int(blur[1])
+                img.blur(radius=blur_radius, sigma=blur_sigma)
 
+            # grayscale effect
             if param.get_grayscale():
                 img.type = 'grayscale'
 
+            # Adaptive sharpen effect
             if param.get_adaptive_sharpen():
-                img.adaptive_sharpen(radius=10, sigma=9)
+                sharpen = param.get_adaptive_sharpen().split(",")
+                sharpen_radius = int(sharpen[0])
+                sharpen_sigma = int(sharpen[1])
+                img.adaptive_sharpen(radius=sharpen_radius, sigma=sharpen_sigma)
 
+            # resize image
             if param.get_resize():
-                width = 300
-                height = 300
-                print(img.size)
+                resize = param.get_resize().split(",")
+                width = int(resize[0])
+                height = int(resize[1])
                 img.resize(width, height)
-                print(img.size)
 
+            # mirror effect horizontal
             if param.get_flip():
                 img.flip()
 
+            # mirror effect vertical
             if param.get_flop():
                 img.flop()
 
+            # rotate image
             if param.get_rotate():
-                print(param.get_rotate())
-                angle = param.get_rotate()[0]
-                color = param.get_rotate()[1]
-                img.rotate(angle, background=Color(color))
+                rotate = param.get_rotate().split(",")
+                rotate_angle = int(rotate[0])
+                rotate_color = rotate[1]
+                img.rotate(rotate_angle, background=Color(rotate_color))
 
+            # Noise effect
             if param.get_noise():
-                img.noise("laplacian", attenuate=1.0)
+                noise_attenuate = float(param.get_noise());
+                img.noise("laplacian", attenuate=noise_attenuate)
 
+            # Charcoal effect
             if param.get_charcoal():
-                img.charcoal(radius=1.5, sigma=0.5)
+                charcoal = param.get_charcoal().split(",")
+                charcoal_radius = int(charcoal[0])
+                charcoal_sigma = int(charcoal[1])
+                img.charcoal(radius=charcoal_radius, sigma=charcoal_sigma)
 
+            # Matrix effect
             if param.get_matrix():
                 matrix = [[0, 0, 1],
                           [0, 1, 0],
                           [1, 0, 0]]
                 img.color_matrix(matrix)
 
+            # Implode effect
             if param.get_implode():
-                img.implode(amount=0.35)
+                implode = float(param.get_implode())
+                img.implode(amount=implode)
 
+            # Add vignette to the image
             if param.get_vignette():
-                img.vignette(sigma=3, x=10, y=10)
+                vignette = param.get_vignette().split(",")
+                vignette_sigma = int(vignette[0])
+                vignette_x = int(vignette[1])
+                vignette_y = int(vignette[2])
+                img.vignette(sigma=vignette_sigma, x=vignette_x, y=vignette_y)
 
-            img.save(filename='D:\jalasoft\ATLatam2\CONVERT_SERVICE\convert_service/media/img.png')
-
-    def png_to_jpg(self):
-        with Image(filename='./assets/image.png') as img:
-            img.format = 'jpg'
-            img.save(filename='./results/png_to_jpg/img.jpg')
-
-    def jpg_to_png(self):
-        with Image(filename='./assets/mario.jpg') as img:
-            img.format = 'png'
-            # img.type='grayscale'
-            img.save(filename='./results/jpg_to_png/img.png')
+            # Generate date
+            date = datetime.datetime.now()
+            date = date.strftime("%Y%m%d%H%M%S")
+            filename = f"media/{date}.jpg"
+            final_path = f"./../convert_service/{filename}"
+            self.set_final_path(filename)
+            # Save image
+            img.save(filename=final_path)
