@@ -9,6 +9,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
+from .model import Model
 from keras.preprocessing import image
 from keras.applications.resnet import ResNet50
 from keras.applications.resnet import preprocess_input
@@ -16,12 +17,17 @@ from keras.applications.resnet import decode_predictions
 import numpy as np
 
 
-class ResNet:
+class ResNet(Model):
     """Model ResNet50"""
     def __init__(self):
+        pass
+
+    # This function initialize the model
+    def start(self):
         self.name = 'ResNet50'
         self.model = ResNet50(weights='imagenet', include_top=True)
 
+    # This function tries to predict the objects
     def predict(self, img_path):
         # Preprocessing
         original = image.load_img(img_path, target_size=(224, 224))

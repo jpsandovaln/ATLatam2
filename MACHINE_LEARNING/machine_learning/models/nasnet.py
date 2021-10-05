@@ -9,6 +9,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
+from .model import Model
 from keras.applications.nasnet import NASNetLarge
 from keras.applications.nasnet import preprocess_input
 from keras.applications.nasnet import decode_predictions
@@ -16,12 +17,17 @@ from keras.preprocessing import image
 import numpy as np
 
 
-class NasNet:
+class NasNet(Model):
     """Model NasNetLarge"""
     def __init__(self):
+        pass
+
+    # This function initialize the model
+    def start(self):
         self.name = 'NasNet'
         self.model = NASNetLarge(weights='imagenet', include_top=True)
 
+    # This function tries to predict the objects
     def predict(self, img_path):
         # Preprocessing
         original = image.load_img(img_path, target_size=(331, 331))

@@ -14,7 +14,9 @@ from prediction import Prediction
 if __name__ == '__main__':
     model = "vgg"
     folder_name = "images"
-    test = Prediction(folder_name)
+    word = "Bus"
+    percentage = 50
+    test = Prediction(folder_name, word, percentage)
     list = test.predict(model)
 
     for element in list:

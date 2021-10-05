@@ -10,6 +10,7 @@
 # with Jalasoft.
 #
 import os
+import datetime
 from .nasnet import NasNet
 from .resnet import ResNet
 from .result import Result
@@ -20,17 +21,31 @@ from .yolo import Yolo
 class Prediction:
     """Performs object detection on all images in a directory"""
 
-    def __init__(self, folder):
+    def __init__(self, folder, word, percentage):
         self.models = {'nasnet': NasNet(), 'resnet': ResNet(), 'vgg': Vgg16(), 'yolo': Yolo()}
         self.folder = folder
+        self.word = word
+        self.percentage = percentage
         self.images = os.listdir(folder)
 
+    # This function predicts the object according to the given percentage and word and return a list of objects
     def predict(self, model):
         model = self.models[model]
+        model.start()
         list_obj = []
         for image in self.images:
             pre = model.predict('/'.join((self.folder, image)))
-            result = Result(image, model.name, pre)
-            list_obj.append(result)
+
+            for element in pre:
+                if self.word in element and int(element[1]) > self.percentage:
+                    result = Result(image, model.name, element[1], self.__convert_time(image), self.word)
+                    list_obj.append(result)
+                    break
 
         return list_obj
+
+    # This function converts the name of the file into a time format
+    def __convert_time(self, name_img):
+        index = name_img.find('.')
+        name_img = int(name_img[:index])
+        return str(datetime.timedelta(seconds=name_img))
