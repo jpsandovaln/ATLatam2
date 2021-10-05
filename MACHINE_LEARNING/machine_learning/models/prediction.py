@@ -25,7 +25,7 @@ class Prediction:
         self.models = {'nasnet': NasNet(), 'resnet': ResNet(), 'vgg': Vgg16(), 'yolo': Yolo()}
         self.folder = folder
         self.word = word
-        self.percentage = percentage
+        self.percentage = int(percentage)
         self.images = os.listdir(folder)
 
     # This function predicts the object according to the given percentage and word and return a list of objects
