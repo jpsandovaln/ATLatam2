@@ -13,7 +13,7 @@ from abc import ABC, abstractmethod
 
 
 class Model(ABC):
-
+    "The objective of this abstract class is that all the subclasses that inherit this class, implement these methods"
     @abstractmethod
     def predict(self):
         pass
