@@ -15,7 +15,6 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 import json
 from pathlib import Path
-#from models.prediction import Prediction
 from .model.prediction import Prediction
 from zipfile import ZipFile
 
