@@ -42,8 +42,8 @@ class Yolo(Model):
             'teddy bear', 'hair drier', 'toothbrush']
 
         BASE_DIR = Path(__file__).resolve().parent
-        modelConfiguration = str(BASE_DIR) + "\yolov3.cfg"
-        modelWeigths = str(BASE_DIR) + "\yolov3.weights"
+        modelConfiguration = str(BASE_DIR) + "\\yolov3.cfg"
+        modelWeigths = str(BASE_DIR) + "\\yolov3.weights"
 
         self.net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeigths)
         self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
