@@ -1,15 +1,21 @@
-#
-# @models.py Copyright (c) 2021 Jalasoft.
-# Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
-# All rights reserved.
-#
-# This software is the confidential and proprietary information of
-# Jalasoft, ("Confidential Information"). You shall not
-# disclose such Confidential Information and shall use it only in
-# accordance with the terms of the license agreement you entered into
-# with Jalasoft.
-#
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+
+
+class Models(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20)
+    library = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'models'
 
 
 class Modules(models.Model):
@@ -22,14 +28,15 @@ class Modules(models.Model):
         db_table = 'modules'
 
 
-class Models(models.Model):
+    def __str__(self):
+        return self.name
+
+class Assets(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
-    library = models.CharField(max_length=20, blank=True, null=True)
+    path = models.CharField(max_length=50)
+    checksum = models.CharField(max_length=50)
 
     class Meta:
-        managed = False
-        db_table = 'models'
-
-    def __str__(self):
-        return '{} algo {}'.format(self.name, self.library)
+        managed = True
+        db_table = 'assets'
