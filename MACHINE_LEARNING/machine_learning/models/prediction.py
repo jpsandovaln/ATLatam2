@@ -37,7 +37,7 @@ class Prediction:
             pre = model.predict('/'.join((self.folder, image)))
 
             for element in pre:
-                if float(element[1] * 100) > self.percentage and (self.word in element[0] or self.word.capitalize() in element[0] or self.word.upper() in element[0] or self.word.lower() in element[0]):
+                if self.word.lower() in element[0].lower() and float(element[1] * 100) > self.percentage:
                     result = Result(image, model.name, round(element[1]*100, 2), self.__convert_time(image), self.word)
                     list_obj.append(result)
                     break
