@@ -22,6 +22,7 @@ class VideoConverterModel:
                             vf_vertically: bool,
                             vf_remove_audio: bool,
                             vf_rotate: bool,
+                            vf_percentage: int,
                             vf_reduce_video: bool,
                             input1,
                             input2='') -> str:
@@ -54,18 +55,24 @@ class VideoConverterModel:
         # 3 Remove audio from a video
         if vf_remove_audio == True:
             cmd = cmd_ffmpeg + input1 + ' -c:v copy -an ' + output + '.mp4'
-            entry1 = output + ".mp4"
+            input1 = output + ".mp4"
             finaloutput = output
             output = output + '3'
             commands.append(cmd)
 
-        # 4 Rotate the video 2 = 180 grades
-            # 0 = 90 Counter clockwise and Vertical Flip (default)
-            # 1 = 90 Clockwise
-            # 2 = 90 CounterClockwise
-            # 3 = 90 Clockwise and Vertical Flip
+        # 0 = 90 Counter clockwise and Vertical Flip (default)
+        # 1 = 90 Clockwise
+        # 2 = 90 CounterClockwise
+        # 3 = 90 Clockwise and Vertical Flip
         if vf_rotate == True:
-            cmd = cmd_ffmpeg + input1 + ' -vf "transpose=2,transpose=2" ' + output + '.mp4'
+            if int(vf_percentage) == 2:
+                vf_str_percentage = str(vf_percentage)
+                cmd = cmd_ffmpeg + input1 + ' -vf "transpose=' + vf_str_percentage + ',' + 'transpose=' + \
+                      vf_str_percentage + '" ' + output + '.mp4'
+            else:
+                vf_str_percentage = str(vf_percentage)
+                cmd = cmd_ffmpeg + input1 + ' -vf "transpose=' + vf_str_percentage + '" ' + output + '.mp4'
+
             input1 = output + ".mp4"
             finaloutput = output
             output = output + '4'
@@ -73,7 +80,7 @@ class VideoConverterModel:
 
         # Reduce the video to 480p
         if vf_reduce_video == True:
-            cmd = cmd_ffmpeg + input + ' -vf scale=220:240 -preset slow -crf 18 ' + output + '.mp4'
+            cmd = cmd_ffmpeg + input1 + ' -vf scale=220:240 -preset slow -crf 18 ' + output + '.mp4'
             input1 = output + ".mp4"
             finaloutput = output
             output = output + '5'
@@ -81,6 +88,6 @@ class VideoConverterModel:
 
         # Rename the final file
         if len(commands) > 0:
-            commands.append('rename|' + finaloutput.replace('\\','/') + '.mp4|' + str(BASE_DIR).replace('\\','/') + "/media/" + sessionkey + '.mp4')
+            commands.append('rename|' + finaloutput.replace('\\', '/') + '.mp4|' + str(BASE_DIR).replace('\\',
+                                                                                                         '/') + "/media/" + sessionkey + '.mp4')
         return commands
-
