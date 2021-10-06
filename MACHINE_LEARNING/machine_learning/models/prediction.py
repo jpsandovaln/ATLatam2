@@ -25,7 +25,7 @@ class Prediction:
         self.models = {'nasnet': NasNet(), 'resnet': ResNet(), 'vgg': Vgg16(), 'yolo': Yolo()}
         self.folder = folder
         self.word = word
-        self.percentage = percentage
+        self.percentage = int(percentage)
         self.images = os.listdir(folder)
 
     # This function predicts the object according to the given percentage and word and return a list of objects
@@ -37,8 +37,8 @@ class Prediction:
             pre = model.predict('/'.join((self.folder, image)))
 
             for element in pre:
-                if self.word in element and int(element[1]) > self.percentage:
-                    result = Result(image, model.name, element[1], self.__convert_time(image), self.word)
+                if self.word.lower() in element[0].lower() and float(element[1] * 100) > self.percentage:
+                    result = Result(image, model.name, round(element[1]*100, 2), self.__convert_time(image), self.word)
                     list_obj.append(result)
                     break
 
