@@ -84,6 +84,7 @@ class Yolo(Model):
 
         for i in indices:
             i = i[0]
-            predictions_list.append((self.classNames[classIds[i]].capitalize(), str(int(confs[i] * 100))))
+            print(confs[i])
+            predictions_list.append((self.classNames[classIds[i]].capitalize(), confs[i]))
 
         return predictions_list
