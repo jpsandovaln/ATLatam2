@@ -3,5 +3,5 @@ class ParameterException(Exception):
         self.message = message
         self.status = "405"
         self.code = code
-        super().__init__(self.message)
+        super().__init__(self.message, self.status, self.code)
 
