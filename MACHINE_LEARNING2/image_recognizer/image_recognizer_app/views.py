@@ -18,6 +18,7 @@ from pathlib import Path
 from .model.prediction import Prediction
 from zipfile import ZipFile
 from .models import Assets2
+from .utils.checksum import Checksum
 
 
 
@@ -34,6 +35,13 @@ class Recognizer(View):
 
         BASE_DIR = Path(__file__).resolve().parent.parent
         filepath1 = str(BASE_DIR) + "/media"
+
+        calculated_md5 = Checksum.md5(uploaded_file)
+
+        if calculated_md5 == md5:
+            print("es el mismo archivo")
+        else:
+            print("son archivos diferentes")
 
         # chek if the sent zip-file already exists (its MD% information in the DB
         if Assets2.objects.filter(checksum=md5):
@@ -61,24 +69,3 @@ class Recognizer(View):
 
             # return HttpResponse(json.dumps(testing), 'application/json')
             return JsonResponse(testing, safe=False)
-
-
-
-
-
-#recuperar checksum (enviado por el usuario)
-        #fs = FileSystemStorage()
-        #fs.save(uploaded_file.name, uploaded_file)
-        # asset = Assets2(name=uploaded_file.name, path=filepath1, checksum=md5)
-        # asset.save()
-
- # hacer el insert
-        # unzip FIle
-
-
-        # Call ML Prediction and get results
-        #result = Prediction(filepath1+'/'+uploaded_file.name[:-4], word, percentage).predict(model)
-        #testing = [pred.as_dict() for pred in result]
-
-        # return HttpResponse(json.dumps(testing), 'application/json')
-        #return JsonResponse(testing, safe=False)
