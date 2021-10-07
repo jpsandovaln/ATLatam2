@@ -9,8 +9,6 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-
-
 import os
 import uuid
 from django.core.files.storage import FileSystemStorage
@@ -19,7 +17,7 @@ from django.http import HttpResponse
 from pathlib import Path
 import json
 from .model.VideoConverterModel import VideoConverterModel
-from .util.Utilities import Utilities
+from .util.utilities import Utilities
 
 
 class VideoConverter(View):
@@ -37,31 +35,41 @@ class VideoConverter(View):
 
             try:
                 # Upload files and parameters
-                uploaded_file1 = request.FILES['file']
-                uploaded_file2 = request.FILES['file2']
                 vs_horizontally = request.POST.get('horizontally', "0")
                 vs_vertically = request.POST.get('vertically', "0")
                 vs_remove_audio = request.POST.get('remove_audio', "0")
                 vs_rotate = request.POST.get('rotate', "0")
+                vs_percentage = request.POST.get('percentage', "0")
                 vs_reduce_video = request.POST.get('reduce_video', "0")
 
-                filename1 = session_key + "_" + uploaded_file1.name
-                filename2 = session_key + "_" + uploaded_file2.name
+                total_files = len(request.FILES)
+                if int(total_files) == 0:
+                    raise Exception("At least one video must be uploaded")
 
-                # Save the file
+                if ((str(vs_horizontally) == "1") | (str(vs_vertically) == "1")) & int(total_files) == 1:
+                    raise Exception("For this option, two videos are required")
+
+                # Save the videos
                 fs = FileSystemStorage()
-                fs.save(filename1, uploaded_file1)
-                fs.save(filename2, uploaded_file2)
-
-                # Set the path to the requested file
+                uploaded_file1 = request.FILES['file']
+                filename1 = session_key + "_" + uploaded_file1.name
                 full_filename1 = str(base_dir) + "/media/" + filename1
-                full_filename2 = str(base_dir) + "/media/" + filename2
+                fs.save(full_filename1, uploaded_file1)
+                full_filename2 = ''
+
+                if (str(vs_horizontally) == "1") | (str(vs_vertically) == "1"):
+                    uploaded_file2 = request.FILES['file2']
+                    filename2 = session_key + "_" + uploaded_file2.name
+                    full_filename2 = str(base_dir) + "/media/" + filename2
+                    fs.save(full_filename2, uploaded_file2)
 
                 # Call the class to convert the video
                 video = VideoConverterModel()
-                commands = video.GetCommandsForVideo(base_dir, session_key, vs_horizontally == "1", vs_vertically == "1",
-                                                     vs_remove_audio == "1", vs_rotate == "1", vs_reduce_video == "1",
-                                                     full_filename1, full_filename2)
+                commands = video.GetCommandsForVideo(str(base_dir), session_key, vs_horizontally == "1",
+                                                     vs_vertically == "1", vs_remove_audio == "1", vs_rotate == "1",
+                                                     vs_percentage, vs_reduce_video == "1", full_filename1,
+                                                     full_filename2)
+
                 # Executing the commands obtained
                 for cmd in commands:
                     if cmd.startswith("rename"):
@@ -86,24 +94,24 @@ class VideoConverter(View):
                         "vertically": vs_vertically,
                         "remove_audio": vs_remove_audio,
                         "rotate": vs_rotate,
+                        "percentage": vs_percentage,
                         "reduce_video": vs_reduce_video
                     }
                 }
                 # Result in json
                 return HttpResponse(json.dumps(result), 'application/json')
 
-            except:
+            except Exception as e:
                 # Delete extra files - KB: https://pynative.com/python-delete-files-and-directories/
                 pattern = str(base_dir) + "/media/" + session_key + "_*"
                 Utilities.delete_files_pattern(pattern)
 
                 result_error = {
                     "id": session_key,
-                    "status": "error"
+                    "status": "error",
+                    "message": str(e)
                 }
                 # Result in json
                 return HttpResponse(json.dumps(result_error), 'application/json')
 
         return HttpResponse("Please, used method POST")
-
-
