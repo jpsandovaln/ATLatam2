@@ -14,6 +14,7 @@ import cv2
 from PIL import Image
 import numpy as np
 from .model import Model
+from pathlib import Path
 
 
 class Yolo(Model):
@@ -40,8 +41,9 @@ class Yolo(Model):
             'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors',
             'teddy bear', 'hair drier', 'toothbrush']
 
-        modelConfiguration = 'yolov3.cfg'
-        modelWeigths = 'yolov3.weights'
+        BASE_DIR = Path(__file__).resolve().parent
+        modelConfiguration = str(BASE_DIR) + "\\yolov3.cfg"
+        modelWeigths = str(BASE_DIR) + "\\yolov3.weights"
 
         self.net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeigths)
         self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
@@ -84,7 +86,6 @@ class Yolo(Model):
 
         for i in indices:
             i = i[0]
-            print(confs[i])
             predictions_list.append((self.classNames[classIds[i]].capitalize(), confs[i]))
 
         return predictions_list
