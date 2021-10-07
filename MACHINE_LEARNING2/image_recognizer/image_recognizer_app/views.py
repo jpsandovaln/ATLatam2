@@ -17,6 +17,8 @@ import json
 from pathlib import Path
 from .model.prediction import Prediction
 from zipfile import ZipFile
+from .models import Assets2
+
 
 
 class Recognizer(View):
@@ -25,22 +27,58 @@ class Recognizer(View):
     def post(self, request):
 
         uploaded_file = request.FILES['file']
-        fs = FileSystemStorage()
-        fs.save(uploaded_file.name, uploaded_file)
         word = request.POST['word']
         model = request.POST['model']
         percentage = request.POST['percentage']
+        md5 = request.POST['md5']
 
         BASE_DIR = Path(__file__).resolve().parent.parent
         filepath1 = str(BASE_DIR) + "/media"
 
+        # chek if the sent zip-file already exists (its MD% information in the DB
+        if Assets2.objects.filter(checksum=md5):
+            print('ya un archivo con el mismo checksum')
+            previous_file = Assets2.objects.get(checksum=md5)
+            with ZipFile('/'.join((previous_file.path, previous_file.name)), 'r') as zipObj:
+                zipObj.extractall(previous_file.path)
+
+            result = Prediction(previous_file.path + '/' + previous_file.name[:-4], word, percentage).predict(model)
+            testing = [pred.as_dict() for pred in result]
+
+            return JsonResponse(testing, safe=False)
+
+        # if not, then save the file MD% into the DB and upload de file
+        else:
+            fs = FileSystemStorage()
+            fs.save(uploaded_file.name, uploaded_file)
+            asset = Assets2(name=uploaded_file.name, path=filepath1, checksum=md5)
+            asset.save()
+            with ZipFile('/'.join((filepath1, uploaded_file.name)), 'r') as zipObj:
+                zipObj.extractall(filepath1)
+
+            result = Prediction(filepath1 + '/' + uploaded_file.name[:-4], word, percentage).predict(model)
+            testing = [pred.as_dict() for pred in result]
+
+            # return HttpResponse(json.dumps(testing), 'application/json')
+            return JsonResponse(testing, safe=False)
+
+
+
+
+
+#recuperar checksum (enviado por el usuario)
+        #fs = FileSystemStorage()
+        #fs.save(uploaded_file.name, uploaded_file)
+        # asset = Assets2(name=uploaded_file.name, path=filepath1, checksum=md5)
+        # asset.save()
+
+ # hacer el insert
         # unzip FIle
-        with ZipFile('/'.join((filepath1, uploaded_file.name)), 'r') as zipObj:
-            zipObj.extractall(filepath1)
+
 
         # Call ML Prediction and get results
-        result = Prediction(filepath1+'/'+uploaded_file.name[:-4], word, percentage).predict(model)
-        testing = [pred.as_dict() for pred in result]
+        #result = Prediction(filepath1+'/'+uploaded_file.name[:-4], word, percentage).predict(model)
+        #testing = [pred.as_dict() for pred in result]
 
         # return HttpResponse(json.dumps(testing), 'application/json')
-        return JsonResponse(testing, safe=False)
+        #return JsonResponse(testing, safe=False)

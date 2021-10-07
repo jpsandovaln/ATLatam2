@@ -15,9 +15,9 @@ class Assets(models.Model):
 
 class Assets2(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
-    path = models.CharField(max_length=50)
-    checksum = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    path = models.CharField(max_length=100)
+    checksum = models.CharField(max_length=100)
 
     class Meta:
         managed = True
