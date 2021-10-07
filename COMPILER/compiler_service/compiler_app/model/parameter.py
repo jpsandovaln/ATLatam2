@@ -3,21 +3,21 @@ from ..exception.parameter_exception import ParameterException
 
 
 class Parameter:
-    def __init__(self, file_path, folder_path, binary_path):
+    def __init__(self, file_path: str, folder_path: str, binary_path: str):
         self._file_path = file_path
         self._folder_path = folder_path
         self._binary_path = binary_path
 
-    def get_file_path(self):
+    def get_file_path(self) -> str:
         return self._file_path
 
-    def get_folder_path(self):
+    def get_folder_path(self) -> str:
         return self._folder_path
 
-    def get_binary_path(self):
+    def get_binary_path(self) -> str:
         return self._binary_path
 
-    def validate(self):
+    def validate(self) -> None:
         if self._file_path is None or str(self._file_path).strip() == "":
             raise ParameterException("invalid file, the value is empty", "Latam-02-44875")
         isFile = os.path.isfile(self._file_path)
