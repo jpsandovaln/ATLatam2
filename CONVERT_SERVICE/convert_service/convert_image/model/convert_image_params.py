@@ -13,21 +13,20 @@
 class ConvertImageParams:
     """Class to manage the params to convert image"""
 
-    def __init__(self, filename, grayscale, blur, adaptive_sharpen, resize, flip, flop, rotate, noise, charcoal, matrix,
-                 implode, vignette):
+    def __init__(self, filename, request):
         self.filename = filename
-        self.grayscale = grayscale
-        self.blur = blur
-        self.adaptive_sharpen = adaptive_sharpen
-        self.resize = resize
-        self.flip = flip
-        self.flop = flop
-        self.rotate = rotate
-        self.noise = noise
-        self.charcoal = charcoal
-        self.matrix = matrix
-        self.implode = implode
-        self.vignette = vignette
+        self.grayscale = self.except_request(request, 'grayscale')
+        self.blur = self.except_request(request, 'blur')
+        self.adaptive_sharpen = self.except_request(request, 'adaptive_sharpen')
+        self.resize = self.except_request(request, 'resize')
+        self.flip = self.except_request(request, 'flip')
+        self.flop = self.except_request(request, 'flop')
+        self.rotate = self.except_request(request, 'rotate')
+        self.noise = self.except_request(request, 'noise')
+        self.charcoal = self.except_request(request, 'charcoal')
+        self.matrix = self.except_request(request, 'matrix')
+        self.implode = self.except_request(request, 'implode')
+        self.vignette = self.except_request(request, 'vignette')
 
     def get_filename(self):
         return self.filename
@@ -67,3 +66,10 @@ class ConvertImageParams:
 
     def get_vignette(self):
         return self.vignette
+
+    @staticmethod
+    def except_request(request, value):
+        try:
+            return request.POST[value]
+        except:
+            return False
