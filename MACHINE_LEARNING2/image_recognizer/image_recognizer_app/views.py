@@ -38,10 +38,9 @@ class Recognizer(View):
 
         calculated_md5 = Checksum.md5(uploaded_file)
 
-        if calculated_md5 == md5:
+        if calculated_md5 != md5:
             print("es el mismo archivo")
-        else:
-            print("son archivos diferentes")
+            return JsonResponse('Try Again', safe=False)
 
         # chek if the sent zip-file already exists (its MD% information in the DB
         if Assets2.objects.filter(checksum=md5):
@@ -55,7 +54,7 @@ class Recognizer(View):
 
             return JsonResponse(testing, safe=False)
 
-        # if not, then save the file MD% into the DB and upload de file
+        # if not, then save the file MD5 into the DB and upload de file
         else:
             fs = FileSystemStorage()
             fs.save(uploaded_file.name, uploaded_file)
