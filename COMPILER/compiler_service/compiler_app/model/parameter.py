@@ -1,5 +1,8 @@
 import os
 from ..exception.parameter_exception import ParameterException
+from ..validator.empty_or_none_validator import EmptyOrNoneValidator
+from ..validator.file_validator import FileValidator
+from ..validator.context import Context
 
 
 class Parameter:
@@ -18,15 +21,12 @@ class Parameter:
         return self._binary_path
 
     def validate(self) -> None:
-        if self._file_path is None or str(self._file_path).strip() == "":
-            raise ParameterException("invalid file, the value is empty", "Latam-02-44875")
-        isFile = os.path.isfile(self._file_path)
-        if not isFile:
-            raise ParameterException("invalid file path", "Latam-02-4478578")
-        if self._binary_path is None or str(self._binary_path).strip() == "":
-            raise ParameterException("invalid binary file, the value is empty", "Latam-02-44575")
-        if self._folder_path is None or str(self._folder_path).strip() == "":
-            raise ParameterException("invalid folder, the value is empty", "Latam-02-444534")
-        isFolder = os.path.isdir(self._folder_path)
-        if not isFolder:
-            raise ParameterException("invalid folder path", "Latam-02-44575")
+        strategies: list = [
+            EmptyOrNoneValidator("filepath", self._file_path),
+            EmptyOrNoneValidator("folderPath", self._folder_path),
+            EmptyOrNoneValidator("binaryPath", self._binary_path),
+            FileValidator(self._file_path, True),
+            FileValidator(self._folder_path, False)
+        ]
+        context = Context(strategies)
+        context.validate()
