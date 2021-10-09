@@ -9,17 +9,13 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-from django.core.files.storage import FileSystemStorage
+
 from django.views import View
 from django.http import JsonResponse
-from django.http import HttpResponse
-import json
 from pathlib import Path
 from .model.prediction import Prediction
-from zipfile import ZipFile
-from .models import Assets
-from .utils.checksum import Checksum
-
+from .utils.checker import Checker
+from .utils.unzip import Unzip
 
 
 class Recognizer(View):
@@ -34,37 +30,16 @@ class Recognizer(View):
         md5 = request.POST['md5']
 
         BASE_DIR = Path(__file__).resolve().parent.parent
-        filepath1 = str(BASE_DIR) + "/media"
 
-        calculated_md5 = Checksum.md5(uploaded_file)
+        # chek if the sent zip-file already exists
+        verified = Checker.check(BASE_DIR, uploaded_file, md5)
+        # Verify if client send wrong MD5 checksum
+        if verified == -1:
+            return JsonResponse("MD5 sent DO NOT correspond to uploaded file's MD5", safe=False)
 
-        if calculated_md5 != md5:
-            print("es el mismo archivo")
-            return JsonResponse('Try Again', safe=False)
-
-        # chek if the sent zip-file already exists (its MD% information in the DB
-        if Assets.objects.filter(checksum=md5):
-            print('ya un archivo con el mismo checksum')
-            previous_file = Assets.objects.get(checksum=md5)
-            with ZipFile('/'.join((previous_file.path, previous_file.name)), 'r') as zipObj:
-                zipObj.extractall(previous_file.path)
-
-            result = Prediction(previous_file.path + '/' + previous_file.name[:-4], word, percentage).predict(model)
-            testing = [pred.as_dict() for pred in result]
-
-            return JsonResponse(testing, safe=False)
-
-        # if not, then save the file MD5 into the DB and upload de file
         else:
-            fs = FileSystemStorage()
-            fs.save(uploaded_file.name, uploaded_file)
-            asset = Assets(name=uploaded_file.name, path=filepath1, checksum=md5)
-            asset.save()
-            with ZipFile('/'.join((filepath1, uploaded_file.name)), 'r') as zipObj:
-                zipObj.extractall(filepath1)
-
-            result = Prediction(filepath1 + '/' + uploaded_file.name[:-4], word, percentage).predict(model)
+            images_path = Unzip.extract(verified['path'], verified['filename'])
+            result = Prediction(images_path, word, percentage).predict(model)
             testing = [pred.as_dict() for pred in result]
 
-            # return HttpResponse(json.dumps(testing), 'application/json')
             return JsonResponse(testing, safe=False)

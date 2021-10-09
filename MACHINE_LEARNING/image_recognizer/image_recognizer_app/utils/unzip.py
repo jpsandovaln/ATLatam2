@@ -1,5 +1,5 @@
 #
-# @model.py Copyright (c) 2021 Jalasoft.
+# @unzip.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -9,15 +9,16 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-from abc import ABC, abstractmethod
+from zipfile import ZipFile
 
 
-class Model(ABC):
-    "The objective of this abstract class is that all the subclasses that inherit this class, implement these methods"
-    @abstractmethod
-    def predict(self):
-        pass
+class Unzip:
+    """Unzip file on same zip-file path"""
 
-    @abstractmethod
-    def start(self):
-        pass
+    @staticmethod
+    def extract(path, filename):
+
+        with ZipFile('/'.join((path, filename)), 'r') as zipObj:
+            folder = zipObj.namelist()[0]
+            zipObj.extractall(path)
+        return '/'.join((path, folder))
