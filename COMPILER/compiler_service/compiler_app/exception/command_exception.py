@@ -1,6 +1,6 @@
-class CommandException(Exception):
+from ..exception.compiler_exception import CompilerException
+
+
+class CommandException(CompilerException):
     def __init__(self, message, status, code):
-        self.message = message
-        self.status = status
-        self.code = code
-        super().__init__(self.message)
+        super().__init__(message, status, code)

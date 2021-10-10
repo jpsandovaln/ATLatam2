@@ -5,13 +5,12 @@ from .node_command_adapter import NodeCommandAdapter
 from ..exception.command_exception import CommandException
 
 
-
 class CommandFactory:
     def __init__(self):
         pass
 
     @staticmethod
-    def get_instance(language):
+    def get_instance(language: str):
         if language == "java":
             return JavaCommand()
         if language == "java_proxy":
