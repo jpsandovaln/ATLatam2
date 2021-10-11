@@ -16,7 +16,6 @@ from .resnet import ResNet
 from .result import Result
 from .vgg16 import Vgg16
 from .yolo import Yolo
-#from .exceptions.file_exception import FileException
 from ..exceptions.file_exception import FileException
 
 

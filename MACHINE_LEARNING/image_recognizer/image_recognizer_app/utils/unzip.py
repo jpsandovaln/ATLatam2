@@ -15,6 +15,7 @@ from zipfile import ZipFile
 class Unzip:
     """Unzip file on same zip-file path"""
 
+    # Extract the zipfile content at the same path
     @staticmethod
     def extract(path, filename):
         with ZipFile('/'.join((path, filename)), 'r') as zipObj:

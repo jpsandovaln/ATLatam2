@@ -16,7 +16,6 @@ from pathlib import Path
 from .model.prediction import Prediction
 from .utils.checker import Checker
 from .utils.unzip import Unzip
-# from .utils.image_recognizer import Image_recognizer
 
 
 class Recognizer(View):

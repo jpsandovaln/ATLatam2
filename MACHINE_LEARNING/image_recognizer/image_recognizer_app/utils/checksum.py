@@ -15,6 +15,7 @@ import hashlib
 class Checksum:
     """"Calculate Checksum hash from a received file"""
 
+    # Calculate MD5 checksum to a received file.
     @staticmethod
     def md5(file):
         size = 1024*1024  # 1MB
