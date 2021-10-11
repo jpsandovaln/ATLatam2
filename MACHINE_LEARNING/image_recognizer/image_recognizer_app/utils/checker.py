@@ -26,13 +26,13 @@ class Checker:
 
         filepath1 = "/media"
         output = {}
-        # chek if the sent zip-file already exists
+        # Chek if the sent zip-file already exists
         if MlAssets.objects.filter(checksum=md5):
             previous_file = MlAssets.objects.get(checksum=md5)
             output['path'] = str(base_path) + previous_file.path
             output['filename'] = previous_file.name
             return output
-        # if not, then save file's information into the DB and store the file
+        # If not, then save file's information into the DB and store the file
         else:
             fs = FileSystemStorage()
             fs.save(file.name, file)
