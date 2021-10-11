@@ -10,7 +10,7 @@
 # with Jalasoft.
 #
 from django.core.files.storage import FileSystemStorage
-from ..models import Assets
+from ..models import MlAssets
 from .checksum import Checksum
 
 
@@ -27,16 +27,16 @@ class Checker:
         filepath1 = "/media"
         output = {}
         # chek if the sent zip-file already exists
-        if Assets.objects.filter(checksum=md5):
-            previous_file = Assets.objects.get(checksum=md5)
+        if MlAssets.objects.filter(checksum=md5):
+            previous_file = MlAssets.objects.get(checksum=md5)
             output['path'] = str(base_path) + previous_file.path
             output['filename'] = previous_file.name
             return output
-        # if not, then save file's MD5 into the DB and store the file
+        # if not, then save file's information into the DB and store the file
         else:
             fs = FileSystemStorage()
             fs.save(file.name, file)
-            asset = Assets(name=file.name, path=filepath1, checksum=md5)
+            asset = MlAssets(name=file.name, path=filepath1, checksum=md5)
             asset.save()
             output['path'] = str(base_path) + filepath1
             output['filename'] = file.name

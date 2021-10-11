@@ -20,26 +20,19 @@ from .utils.unzip import Unzip
 
 class Recognizer(View):
     """ Machine Learning Endpoint, call machine learning modules with
-        receive parameters and recognize objects from a zipped image folder"""
+        received parameters and recognize objects from a zipped image folder"""
     def post(self, request):
 
-        uploaded_file = request.FILES['file']
-        word = request.POST['word']
-        model = request.POST['model']
-        percentage = request.POST['percentage']
-        md5 = request.POST['md5']
-
         BASE_DIR = Path(__file__).resolve().parent.parent
-
         # chek if the sent zip-file already exists
-        verified = Checker.check(BASE_DIR, uploaded_file, md5)
-        # Verify if client send wrong MD5 checksum
+        verified = Checker.check(BASE_DIR, request.FILES['file'], request.POST['md5'])
+
         if verified == -1:
             return JsonResponse("MD5 sent DO NOT correspond to uploaded file's MD5", safe=False)
 
         else:
             images_path = Unzip.extract(verified['path'], verified['filename'])
-            result = Prediction(images_path, word, percentage).predict(model)
+            result = Prediction(images_path, request.POST['word'], request.POST['percentage']
+                                ).predict(request.POST['model'])
             testing = [pred.as_dict() for pred in result]
-
             return JsonResponse(testing, safe=False)

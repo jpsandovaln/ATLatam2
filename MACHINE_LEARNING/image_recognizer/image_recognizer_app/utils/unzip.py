@@ -17,7 +17,6 @@ class Unzip:
 
     @staticmethod
     def extract(path, filename):
-
         with ZipFile('/'.join((path, filename)), 'r') as zipObj:
             folder = zipObj.namelist()[0]
             zipObj.extractall(path)
