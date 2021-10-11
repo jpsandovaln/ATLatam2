@@ -16,6 +16,7 @@ from .resnet import ResNet
 from .result import Result
 from .vgg16 import Vgg16
 from .yolo import Yolo
+from ..exceptions.file_exception import FileException
 
 
 class Prediction:
@@ -26,7 +27,13 @@ class Prediction:
         self.folder = folder
         self.word = word
         self.percentage = int(percentage)
-        self.images = os.listdir(folder)
+        try:
+            self.images = os.listdir(folder)
+        except Exception as error:
+            raise FileException(
+                "The name of the zip file is different from the within the folder name.\n" +
+                str(error.__class__) + " - " + str(error), "500", "code"
+            )
 
     # This function predicts the object according to the given percentage and word and return a list of objects
     def predict(self, model):
@@ -38,7 +45,7 @@ class Prediction:
 
             for element in pre:
                 if self.word.lower() in element[0].lower() and float(element[1] * 100) > self.percentage:
-                    result = Result(image, model.name, round(element[1]*100, 2), self.__convert_time(image), self.word)
+                    result = Result(image, model.name, round(element[1]*100, 2), self.__convert_time(image), element[0])
                     list_obj.append(result)
                     break
 
@@ -47,5 +54,11 @@ class Prediction:
     # This function converts the name of the file into a time format
     def __convert_time(self, name_img):
         index = name_img.find('.')
-        name_img = int(name_img[:index])
+        try:
+            name_img = int(name_img[:index])
+        except Exception as error:
+            raise FileException(
+                "The name of the file should be only numbers that represent the time of a video.\nName of file: "
+                + name_img + "\n" + str(error.__class__) + " - " + str(error), "500", "code")
+
         return str(datetime.timedelta(seconds=name_img))

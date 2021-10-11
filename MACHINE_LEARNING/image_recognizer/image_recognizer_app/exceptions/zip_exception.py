@@ -1,5 +1,5 @@
 #
-# @main.py Copyright (c) 2021 Jalasoft.
+# @zip_exception.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -9,15 +9,9 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-from prediction import Prediction
-
-if __name__ == '__main__':
-    model = "vgg"
-    folder_name = "images"
-    word = "Bus"
-    percentage = 50
-    test = Prediction(folder_name, word, percentage)
-    list = test.predict(model)
-
-    for element in list:
-        print(element.as_dict())
+class ZipException(Exception):
+    def __init__(self, message, status, code):
+        self.message = message
+        self.status = status
+        self.code = code
+        super().__init__(self.message)

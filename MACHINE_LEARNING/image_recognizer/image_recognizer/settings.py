@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-36177g39%7b0ze8ofta*3#f6z)i_336gi)(trojam)1b%fzyk7'
+SECRET_KEY = 'django-insecure-3!_zq(y3+r4kgu_=ed2&h75$pu7%*ke2+^+8c$c-wyss0_7yhb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'machine_learning'
+    'image_recognizer_app',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'machine_learning.urls'
+ROOT_URLCONF = 'image_recognizer.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'machine_learning.wsgi.application'
+WSGI_APPLICATION = 'image_recognizer.wsgi.application'
 
 
 # Database
@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'machine_learning.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'machinelearning',
-        'USER': 'postgres',
-        'PASSWORD': 'hola',
+        'NAME': 'atlatam',
+        'USER': 'atlatam',
+        'PASSWORD': 'atlatam',
         'HOST': 'localhost',
         'DATABASE_PORT': '5432',
         'OPTIONS': {
@@ -131,6 +131,4 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

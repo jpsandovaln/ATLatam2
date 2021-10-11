@@ -1,5 +1,5 @@
 #
-# @asgi.py Copyright (c) 2021 Jalasoft.
+# @file_exception.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -9,11 +9,9 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-
-import os
-
-from django.core.asgi import get_asgi_application
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'machine_learning.settings')
-
-application = get_asgi_application()
+class FileException(Exception):
+    def __init__(self, message, status, code):
+        self.message = message
+        self.status = status
+        self.code = code
+        super().__init__(self.message)
