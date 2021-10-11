@@ -67,6 +67,7 @@ class ConvertImageParams:
     def get_vignette(self):
         return self.vignette
 
+    # Function to validate requests to convert images
     @staticmethod
     def except_request(request, value):
         try:

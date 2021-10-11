@@ -1,5 +1,5 @@
 #
-# @Image.py Copyright (c) 2021 Jalasoft.
+# @file.py Copyright (c) 2021 Jalasoft.
 # 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
 # All rights reserved.
 #
@@ -16,15 +16,18 @@ import json
 from django.http import HttpResponse
 
 
-class Image:
+class File:
     """Class to upload image"""
 
     def __init__(self, request):
         self.uploaded_file = self.except_request_file_image(request)
         fs = FileSystemStorage()
         # Save the file
-        fs.save(self.uploaded_file.name, self.uploaded_file)
-        file = self.uploaded_file.name
+        try:
+            fs.save(self.uploaded_file.name, self.uploaded_file)
+            file = self.uploaded_file.name
+        except:
+            return None
         # Set the path to the requested file
         filename = file
         BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -43,3 +46,4 @@ class Image:
                 "imageOutput": "NOT IMAGE"
             }
             return HttpResponse(json.dumps(result_error), 'application/json')
+        return HttpResponse("Please, used method POST")

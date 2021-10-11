@@ -11,37 +11,20 @@
 #
 
 # Create your views here.
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.files.storage import FileSystemStorage
-from django.views import View
 from django.http import HttpResponse
-from pathlib import Path
-import json
+from django.views import View
 from .model.convert_image import ConvertImage
 from .model.convert_image_params import ConvertImageParams
-from .model.Image import Image
+from .model.file import File
 
 
 class ImageConverter(View):
+    """ Image converter endpoint """
     def post(self, request):
 
-        image = Image(request)
-        param = ConvertImageParams(image.get_file_image(), request)
+        file: File = File(request)
+        param: ConvertImageParams = ConvertImageParams(file.get_file_image(), request)
 
-        try:
-            new_image = ConvertImage()
-            new_image.convert(param)
-            # get download path
-            final_path = new_image.get_final_path()
-            result = {
-                "status": "OK",
-                "imageOutput": "http://" + str(get_current_site(request).domain) + "/" + final_path
-            }
-            return HttpResponse(json.dumps(result), 'application/json')
-        except:
-            result_error = {
-                "status": "ERROR",
-                "imageOutput": "NOT IMaAGE"
-            }
-            return HttpResponse(json.dumps(result_error), 'application/json')
-        return HttpResponse("Please, used method POST")
+        new_image: ConvertImage = ConvertImage(request)
+        new_image.convert(param)
+        return new_image.get_result()
