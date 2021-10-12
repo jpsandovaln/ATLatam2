@@ -10,15 +10,20 @@
 # with Jalasoft.
 #
 from zipfile import ZipFile
+from zipfile import BadZipFile
+from ..exceptions.zip_exception import ZipException
 
 
 class Unzip:
     """Unzip file on same zip-file path"""
 
     # Extract the zipfile content at the same path
-    @staticmethod
-    def extract(path, filename):
-        with ZipFile('/'.join((path, filename)), 'r') as zipObj:
-            folder = zipObj.namelist()[0]
-            zipObj.extractall(path)
-        return '/'.join((path, folder))
+    try:
+        @staticmethod
+        def extract(path, filename):
+            with ZipFile('/'.join((path, filename)), 'r') as zipObj:
+                folder = zipObj.namelist()[0]
+                zipObj.extractall(path)
+            return '/'.join((path, folder))
+    except BadZipFile as error:
+        raise ZipException(error, "Please upload a valid zip file.")

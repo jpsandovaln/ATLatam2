@@ -15,6 +15,7 @@ from PIL import Image
 import numpy as np
 from .model import Model
 from pathlib import Path
+from ..exceptions.yolo_exception import YoloException
 
 
 class Yolo(Model):
@@ -45,7 +46,10 @@ class Yolo(Model):
         modelConfiguration = str(BASE_DIR) + "\\yolov3.cfg"
         modelWeigths = str(BASE_DIR) + "\\yolov3.weights"
 
-        self.net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeigths)
+        try:
+            self.net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeigths)
+        except cv2.error as error:
+            raise YoloException(error, "Please check the weight and cfg files for Yolo.")
         self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
         self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
