@@ -10,6 +10,7 @@
 # with Jalasoft.
 #
 
+from django.db.models import base
 from django.views import View
 from django.http import JsonResponse
 from pathlib import Path
@@ -18,6 +19,10 @@ from .utils.checker import Checker
 from .utils.unzip import Unzip
 from django.http import HttpResponse
 from .utils.imageRecognizer import ImageRecognizer
+import json
+from .exceptions.machine_learning_exception import MachineLearningException
+from .error.error_response import ErrorResponse
+
 
 class Recognizer(View):
     """ Machine Learning Endpoint, call machine learning modules with
@@ -25,15 +30,17 @@ class Recognizer(View):
 
     def post(self, request):
 
-        BASE_DIR = Path(__file__).resolve().parent.parent
         try:
+            BASE_DIR = Path(__file__).resolve().parent.parent
             verified = Checker.check(BASE_DIR, request.FILES['file'], request.POST['md5'])
-
             images_path = Unzip.extract(verified['path'], verified['filename'])
-
             testing = ImageRecognizer.recognize(images_path, request)
-
             return JsonResponse(testing, safe=False)
 
+        except MachineLearningException as error:
+            error = ErrorResponse(error)
+            return HttpResponse(json.dumps(error.get_dictionary_machine_learning()), 'application/json', status=error.get_status())
+
         except Exception as error:
-            return HttpResponse(error, "application/json")
+            error = ErrorResponse(error)
+            return HttpResponse(json.dumps(error.get_dictionary_general()), 'application/json', status=500)

@@ -7,6 +7,7 @@ __pycache__
 .idea
 yolov3.cfg
 yolov3.weights
+media/
 MACHINE_LEARNING/machine_learning/models/images
 CONVERT_SERVICE/convert_service/server.bat
 CONVERT_SERVICE/convert_service/images
