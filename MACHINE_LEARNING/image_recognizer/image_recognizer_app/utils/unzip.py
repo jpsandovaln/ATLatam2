@@ -23,10 +23,9 @@ class Unzip:
     @staticmethod
     def extract(path, filename):
 
-        if not os.path.isfile(path):
+        if not os.path.isfile('/'.join((path, filename))):
             raise Exception("Not valid file path to unzip")
         try:
-            Unzip.validate('/'.join((path, filename)))
             with ZipFile('/'.join((path, filename)), 'r') as zipObj:
                 folder = zipObj.namelist()[0]
                 zipObj.extractall(path)
