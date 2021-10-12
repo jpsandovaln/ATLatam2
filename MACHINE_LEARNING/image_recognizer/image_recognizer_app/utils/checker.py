@@ -22,7 +22,7 @@ class Checker:
         # Calculate uploaded file MD5 checksum and compares it with received MD5
         calculated_md5 = Checksum.md5(file)
         if calculated_md5 != md5:
-            return -1
+            raise Exception("MD5 sent DO NOT correspond to uploaded file's MD5")
 
         filepath1 = "/media"
         output = {}

@@ -16,23 +16,24 @@ from pathlib import Path
 from .model.prediction import Prediction
 from .utils.checker import Checker
 from .utils.unzip import Unzip
-
+from django.http import HttpResponse
+from .utils.imageRecognizer import ImageRecognizer
 
 class Recognizer(View):
     """ Machine Learning Endpoint, call machine learning modules with
         received parameters and recognize objects from a zipped image folder"""
+
     def post(self, request):
 
         BASE_DIR = Path(__file__).resolve().parent.parent
-        # chek if the sent zip-file already exists
-        verified = Checker.check(BASE_DIR, request.FILES['file'], request.POST['md5'])
+        try:
+            verified = Checker.check(BASE_DIR, request.FILES['file'], request.POST['md5'])
 
-        if verified == -1:
-            return JsonResponse("MD5 sent DO NOT correspond to uploaded file's MD5", safe=False)
-
-        else:
             images_path = Unzip.extract(verified['path'], verified['filename'])
-            result = Prediction(images_path, request.POST['word'], request.POST['percentage']
-                                ).predict(request.POST['model'])
-            testing = [pred.as_dict() for pred in result]
+
+            testing = ImageRecognizer.recognize(images_path, request)
+
             return JsonResponse(testing, safe=False)
+
+        except Exception as error:
+            return HttpResponse(error, "application/json")

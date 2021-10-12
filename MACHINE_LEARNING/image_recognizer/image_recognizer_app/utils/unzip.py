@@ -9,6 +9,7 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
+import os
 from zipfile import ZipFile
 
 
@@ -18,7 +19,13 @@ class Unzip:
     # Extract the zipfile content at the same path
     @staticmethod
     def extract(path, filename):
+        Unzip.validate('/'.join((path, filename)))
         with ZipFile('/'.join((path, filename)), 'r') as zipObj:
             folder = zipObj.namelist()[0]
             zipObj.extractall(path)
         return '/'.join((path, folder))
+
+    @staticmethod
+    def validate(path):
+        if not os.path.isfile(path):
+            raise Exception("Not valid file path to unzip")
