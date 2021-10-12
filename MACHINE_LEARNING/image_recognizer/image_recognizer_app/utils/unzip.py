@@ -18,12 +18,12 @@ class Unzip:
     """Unzip file on same zip-file path"""
 
     # Extract the zipfile content at the same path
-    try:
-        @staticmethod
-        def extract(path, filename):
+    @staticmethod
+    def extract(path, filename):
+        try:
             with ZipFile('/'.join((path, filename)), 'r') as zipObj:
                 folder = zipObj.namelist()[0]
                 zipObj.extractall(path)
             return '/'.join((path, folder))
-    except BadZipFile as error:
-        raise ZipException(error, "Please upload a valid zip file.")
+        except BadZipFile as error:
+            raise ZipException(error, "Please upload a valid zip file.")
