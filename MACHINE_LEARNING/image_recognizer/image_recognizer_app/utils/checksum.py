@@ -20,7 +20,7 @@ class Checksum:
     def md5(file):
         size = 1024*1024  # 1MB
         checksum = hashlib.md5()
-        # check is file size is greater than 2.5 MB
+        # Check is file size is greater than 2.5 MB
         if file.multiple_chunks():
             for data in file.chunks(size):
                 checksum.update(data)
