@@ -1,5 +1,5 @@
 #
-# @file_exceptions.py Copyright (c) 2021 Jalasoft.
+# @yolo_exceptions.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -12,10 +12,10 @@
 from ..exceptions.machine_learning_exception import MachineLearningException
 
 
-class FileException(MachineLearningException):
+class YoloException(MachineLearningException):
     """This class exception inherits from 'MachineLearningException' and is used for more easy tracking errors."""
     def __init__(self, error, error_description):
-        self.error_title = "File Exception"
+        self.error_title = "Yolo Exception"
         self.error_class = str(error.__class__)
         self.error_message = str(error)
         self.error_description = error_description
