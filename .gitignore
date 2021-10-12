@@ -17,3 +17,4 @@ CONVERT_SERVICE/convert_service/convert_image/assets/*.png
 CONVERT_SERVICE/convert_service/convert_image/result/*.jpg
 CONVERT_SERVICE/convert_service/convert_image/result/*.png
 .idea/*
+*.log
