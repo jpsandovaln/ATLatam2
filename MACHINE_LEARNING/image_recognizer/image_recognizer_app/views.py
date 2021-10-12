@@ -21,8 +21,7 @@ from django.http import HttpResponse
 from .utils.imageRecognizer import ImageRecognizer
 import json
 from .exceptions.machine_learning_exception import MachineLearningException
-from .error.error_response import ErrorResponse
-
+from .exceptions.error_response import ErrorResponse
 
 class Recognizer(View):
     """ Machine Learning Endpoint, call machine learning modules with
