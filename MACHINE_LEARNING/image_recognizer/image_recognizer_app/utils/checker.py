@@ -21,7 +21,6 @@ class Checker:
     def check(base_path, file, md5):
         # Calculate uploaded file MD5 checksum and compares it with received MD5
         calculated_md5 = Checksum.md5(file)
-        print(md5)
         if calculated_md5 != md5.lower():
             raise Exception("MD5 sent DO NOT correspond to uploaded file's MD5")
 

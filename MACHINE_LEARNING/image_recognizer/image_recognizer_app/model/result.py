@@ -12,13 +12,14 @@
 
 class Result:
     """ Stores the information of the object detection results"""
+
     def __init__(self, image, model, percentage, time, word):
         self.image = image
         self.model = model
-        self.pecentage = percentage
+        self.Confidence = percentage
         self.time = time
         self.word = word
 
     def as_dict(self):
-        return {'imagen': self.image, 'modelo': self.model, 'confidence': str(self.pecentage),
+        return {'image': self.image, 'model': self.model, 'confidence': str(self.Confidence),
                 'time': self.time, 'object': self.word}
