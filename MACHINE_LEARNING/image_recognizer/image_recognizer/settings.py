@@ -75,6 +75,7 @@ WSGI_APPLICATION = 'image_recognizer.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'atlatam',
@@ -86,6 +87,7 @@ DATABASES = {
             'client_encoding': 'UTF8'
              }
     }
+
 }
 
 

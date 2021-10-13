@@ -26,14 +26,8 @@ class Prediction:
         self.models = {'nasnet': NasNet(), 'resnet': ResNet(), 'vgg': Vgg16(), 'yolo': Yolo()}
         self.folder = folder
         self.word = word
-        self.percentage = int(percentage)
-        try:
-            self.images = os.listdir(folder)
-        except Exception as error:
-            raise FileException(
-                "The name of the zip file is different from the within the folder name.\n" +
-                str(error.__class__) + " - " + str(error), "500", "code"
-            )
+        self.confidence = float(percentage)
+        self.images = os.listdir(folder)
 
     # This function predicts the object according to the given percentage and word and return a list of objects
     def predict(self, model):
@@ -44,7 +38,7 @@ class Prediction:
             pre = model.predict('/'.join((self.folder, image)))
 
             for element in pre:
-                if self.word.lower() in element[0].lower() and float(element[1] * 100) > self.percentage:
+                if self.word.lower() in element[0].lower() and float(element[1] * 100) > self.confidence:
                     result = Result(image, model.name, round(element[1]*100, 2), self.__convert_time(image), element[0])
                     list_obj.append(result)
                     break
@@ -56,9 +50,7 @@ class Prediction:
         index = name_img.find('.')
         try:
             name_img = int(name_img[:index])
-        except Exception as error:
-            raise FileException(
-                "The name of the file should be only numbers that represent the time of a video.\nName of file: "
-                + name_img + "\n" + str(error.__class__) + " - " + str(error), "500", "code")
+        except ValueError as error:
+            raise FileException(error, "The name of the files should only number to be converted into time format.")
 
         return str(datetime.timedelta(seconds=name_img))

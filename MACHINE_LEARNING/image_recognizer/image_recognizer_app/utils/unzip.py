@@ -9,7 +9,11 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
+import os
 from zipfile import ZipFile
+from zipfile import BadZipFile
+from ..exceptions.zip_exception import ZipException
+# from ..exceptions.file_exception import FileException
 
 
 class Unzip:
@@ -18,7 +22,13 @@ class Unzip:
     # Extract the zipfile content at the same path
     @staticmethod
     def extract(path, filename):
-        with ZipFile('/'.join((path, filename)), 'r') as zipObj:
-            folder = zipObj.namelist()[0]
-            zipObj.extractall(path)
-        return '/'.join((path, folder))
+
+        if not os.path.isfile('/'.join((path, filename))):
+            raise Exception("Not valid file path to unzip")
+        try:
+            with ZipFile('/'.join((path, filename)), 'r') as zipObj:
+                folder = zipObj.namelist()[0]
+                zipObj.extractall(path)
+            return '/'.join((path, folder))
+        except BadZipFile as error:
+            raise ZipException(error, "Please upload a valid zip file.")
