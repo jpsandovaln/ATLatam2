@@ -11,9 +11,8 @@
 #
 from django.core.files.storage import FileSystemStorage
 from pathlib import Path
-import json
-
 from django.http import HttpResponse
+import json
 
 
 class File:

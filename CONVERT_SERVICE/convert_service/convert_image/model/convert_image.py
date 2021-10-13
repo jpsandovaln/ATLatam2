@@ -18,7 +18,8 @@ import json
 
 
 class ConvertImage:
-    """Class to convert image with many params"""
+    """Class to convert image with the methods to generate the conversion of the image to another using the parameters
+    that were instantiated"""
     final_path = ''
 
     def __init__(self, request):
