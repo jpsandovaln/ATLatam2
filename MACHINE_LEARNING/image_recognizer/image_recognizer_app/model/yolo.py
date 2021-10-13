@@ -19,6 +19,7 @@ from ..exceptions.yolo_exception import YoloException
 
 
 class Yolo(Model):
+    """This class belong to the Yolo model and all the necessary functions to work"""
     def __init__(self):
         pass
 

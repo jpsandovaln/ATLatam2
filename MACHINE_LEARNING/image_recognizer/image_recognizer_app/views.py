@@ -23,6 +23,7 @@ import json
 from .exceptions.machine_learning_exception import MachineLearningException
 from .exceptions.error_response import ErrorResponse
 
+
 class Recognizer(View):
     """ Machine Learning Endpoint, call machine learning modules with
         received parameters and recognize objects from a zipped image folder"""
