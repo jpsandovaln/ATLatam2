@@ -47,7 +47,8 @@ class VideoConverter(View):
             helper = VideoHelper(session_key, base_dir)
 
             # Validate inputs
-            helper.validatefiles(request, vs_horizontally, vs_vertically)
+            total_files = len(request.FILES)
+            helper.validatefiles(total_files, vs_horizontally, vs_vertically)
 
             # Save videos
             full_filename1 = helper.savefile(request.FILES['file'])

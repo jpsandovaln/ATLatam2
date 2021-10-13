@@ -12,6 +12,8 @@
 import uuid
 from unittest import TestCase
 from convert_video.model.VideoConverterModel import VideoConverterModel
+from convert_video.video_helper import VideoHelper
+from exception.video_exception import VideoException
 
 
 class TestVideoConverterModel(TestCase):
@@ -46,7 +48,7 @@ class TestVideoConverterModel(TestCase):
         vt_horizontally = True
         vt_vertically = False
         vt_remove_audio = True
-        vt_rotate = 1
+        vt_rotate = True
         vt_percentage = 1
         vt_reduce_video = False
         input1 = str(BASE_DIR) + "/media/" + sessionkey + "_" + 'input1.mp4'
@@ -82,3 +84,25 @@ class TestVideoConverterModel(TestCase):
         execute_method = call_method.GetCommandsForVideo(BASE_DIR, sessionkey, vt_horizontally, vt_vertically,
                                                          vt_remove_audio, vt_rotate, vt_percentage, vt_reduce_video,
                                                          input1, input2)
+
+        current = execute_method[0] + execute_method[1]
+        expected = 'ffmpeg -i ' + input1 + ' -i ' + input2 + ' -filter_complex vstack=inputs=2 ' + output + '.mp4' + \
+                   'ffmpeg -i ' + output + '.mp4' + ' -vf scale=220:240 -preset slow -crf 18 ' + output + '2.mp4'
+        self.assertEqual(current, expected)
+
+    # Negative unit test: Place two videos vertically in parallel and reduce video size
+    def test_validatefiles(self):
+        vs_horizontally = "1"
+        vs_vertically = "0"
+        base_dir = 'D:\GITHUB\ATLatam2\CONVERT_SERVICE\convert_service'
+        session_key = str(uuid.uuid4().hex)
+        total_files = 0
+
+        try:
+            helper = VideoHelper(session_key, base_dir)
+            helper.validatefiles(total_files, vs_horizontally, vs_vertically)
+
+        except VideoException as err_video:
+            current = err_video.message
+            expected = 'At least one video must be uploaded'
+            self.assertEqual(current, expected)

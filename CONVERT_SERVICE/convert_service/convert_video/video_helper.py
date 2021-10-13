@@ -23,9 +23,8 @@ class VideoHelper:
         self.directory = base_dir
 
     # Method that validates if at least one video is uploaded
-    def validatefiles(self, request, vs_horizontally: str, vs_vertically: str):
+    def validatefiles(self, total_files, vs_horizontally: str, vs_vertically: str):
 
-        total_files = len(request.FILES)
         if int(total_files) == 0:
             raise video_exception.VideoException("Error", "At least one video must be uploaded")
 
