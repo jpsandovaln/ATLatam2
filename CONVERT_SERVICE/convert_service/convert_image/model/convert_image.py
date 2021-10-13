@@ -9,22 +9,44 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
-
+from django.contrib.sites.shortcuts import get_current_site
+from django.http import HttpResponse
 from wand.image import Image
-from wand.display import display
 from wand.color import Color
 import datetime
+import json
 
 
 class ConvertImage:
-    """Class to convert image with many params"""
+    """Class to convert image with the methods to generate the conversion of the image to another using the parameters
+    that were instantiated"""
     final_path = ''
+
+    def __init__(self, request):
+        self.request = request
 
     def get_final_path(self):
         return self.final_path
 
     def set_final_path(self, final_path):
         self.final_path = final_path
+
+    def get_result(self):
+        try:
+            result = {
+                "status": "OK",
+                "imageOutput": "http://" + str(get_current_site(self.request).domain) + "/" + self.get_final_path()
+            }
+            print(result)
+            return HttpResponse(json.dumps(result), 'application/json')
+        except:
+            result_error = {
+                "status": "ERROR",
+                "imageOutput": "NOT IMAGE"
+            }
+            print(result_error)
+            return HttpResponse(json.dumps(result_error), 'application/json')
+        return HttpResponse("Please, used method POST")
 
     def convert(self, param):
 

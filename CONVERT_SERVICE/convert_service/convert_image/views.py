@@ -11,65 +11,20 @@
 #
 
 # Create your views here.
-from django.shortcuts import render
-from django.contrib.sites.shortcuts import get_current_site
-import os
-import uuid
-from django.core.files.storage import FileSystemStorage
-from django.views import View
 from django.http import HttpResponse
-from pathlib import Path
-import json
+from django.views import View
 from .model.convert_image import ConvertImage
 from .model.convert_image_params import ConvertImageParams
+from .model.file import File
 
 
 class ImageConverter(View):
+    """ Image converter endpoint """
     def post(self, request):
-        if request.method == 'POST':
-            # Upload the file
-            uploaded_file = request.FILES['file']
-            grayscale = request.POST['grayscale']
-            blur = request.POST['blur']
-            adaptive_sharpen = request.POST['adaptive_sharpen']
-            resize = request.POST['resize']
-            flip = request.POST['flip']
-            flop = request.POST['flop']
-            rotate = request.POST['rotate']
-            noise = request.POST['noise']
-            charcoal = request.POST['charcoal']
-            matrix = request.POST['matrix']
-            implode = request.POST['implode']
-            vignette = request.POST['vignette']
 
-            print(grayscale)
-            fs = FileSystemStorage()
+        file: File = File(request)
+        param: ConvertImageParams = ConvertImageParams(file.get_file_image(), request)
 
-            # Save the file
-            fs.save(uploaded_file.name, uploaded_file)
-            file = uploaded_file.name
-
-            # Set the path to the requested file
-            filename = file
-            BASE_DIR = Path(__file__).resolve().parent.parent
-            filepath = str(BASE_DIR) + "/media/" + filename
-
-            # Create object image to convert image
-            image = ConvertImage()
-            param = ConvertImageParams(filepath, grayscale, blur, adaptive_sharpen, resize, flip, flop, rotate, noise,
-                                       charcoal,
-                                       matrix, implode,
-                                       vignette)
-            image.convert(param)
-
-            # get download path
-            final_path = image.get_final_path()
-            print(final_path)
-            result = {
-                "status": "OK",
-                "imageOutput": "http://" + str(get_current_site(request).domain) + "/" + final_path
-            }
-
-            return HttpResponse(json.dumps(result), 'application/json')
-
-        return HttpResponse("Please, used method POST")
+        new_image: ConvertImage = ConvertImage(request)
+        new_image.convert(param)
+        return new_image.get_result()
