@@ -13,9 +13,11 @@ from typing import Dict
 
 
 class ErrorResponse():
+    """This class returns a dictionary depending on the type of error."""
     def __init__(self, error):
         self.error = error
 
+    # Return a dictionary for Machine Learning exceptions
     def get_dictionary_machine_learning(self) -> Dict:
         dictionary = {}
         dictionary['error_title'] = self.error.error_title
@@ -27,6 +29,7 @@ class ErrorResponse():
 
         return dictionary
 
+    # Return a dictionary for general exceptions
     def get_dictionary_general(self) -> Dict:
         dictionary = {}
         dictionary['error_title'] = 'Unexpected error'
@@ -36,5 +39,6 @@ class ErrorResponse():
 
         return dictionary
 
+    # Return the status of error
     def get_status(self) -> str:
         return self.error.error_status

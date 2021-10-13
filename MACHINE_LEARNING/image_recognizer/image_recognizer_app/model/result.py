@@ -16,10 +16,11 @@ class Result:
     def __init__(self, image, model, percentage, time, word):
         self.image = image
         self.model = model
-        self.Confidence = percentage
+        self.confidence = percentage
         self.time = time
         self.word = word
 
+    # Return the object 'Result' as dictionary
     def as_dict(self):
-        return {'image': self.image, 'model': self.model, 'confidence': str(self.Confidence),
+        return {'image': self.image, 'model': self.model, 'confidence': str(self.confidence),
                 'time': self.time, 'object': self.word}
