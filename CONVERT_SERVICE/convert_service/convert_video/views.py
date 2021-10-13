@@ -55,7 +55,7 @@ class VideoConverter(View):
             if (str(vs_horizontally) == "1") | (str(vs_vertically) == "1"):
                 full_filename2 = helper.savefile(request.FILES['file2'])
 
-            # video treatment
+            # Video treatment
             video = VideoConverterModel()
             commands = video.GetCommandsForVideo(str(base_dir), session_key, vs_horizontally == "1",
                                                  vs_vertically == "1", vs_remove_audio == "1", vs_rotate == "1",
