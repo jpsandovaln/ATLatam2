@@ -26,7 +26,7 @@ def zip_dir(dir_path, filename):
             f_path = f_path and f_path + os.sep
             # Writing each file into the zip
             for file in files:
-                zip.write(os.path.join(dir_path, file))
+                zip.write(os.path.join(dir_path, file), f_path + file)
         zip.close()
     else:
         os.mkdir("zip")
@@ -39,7 +39,7 @@ def zip_dir(dir_path, filename):
             f_path = f_path and f_path + os.sep
             # Writing each file into the zip
             for file in files:
-                zip.write(os.path.join(dir_path, file))
+                zip.write(os.path.join(dir_path, file), f_path + file)
         zip.close()
 
     if os.path.isdir('zip' + '/' + new_file):
