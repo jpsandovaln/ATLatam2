@@ -1,5 +1,5 @@
 #
-# @tests.py Copyright (c) 2021 Jalasoft.
+# @test.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -11,4 +11,4 @@
 #
 from django.test import TestCase
 
-# Create your tests here.
+# Create your test here.

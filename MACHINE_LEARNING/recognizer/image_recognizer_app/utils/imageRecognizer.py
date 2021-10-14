@@ -10,6 +10,8 @@
 # with Jalasoft.
 #
 import os
+import shutil
+
 from ..model.prediction import Prediction
 
 
@@ -18,10 +20,11 @@ class ImageRecognizer:
 
     @staticmethod
     def recognize(path, request):
-        ImageRecognizer.validate(path)
+        #ImageRecognizer.validate(path)
         result = Prediction(path, request.POST['word'], request.POST['percentage']
                             ).predict(request.POST['model'])
         testing = [pred.as_dict() for pred in result]
+        shutil.rmtree(path)
         return testing
 
     # check if folder path is valid

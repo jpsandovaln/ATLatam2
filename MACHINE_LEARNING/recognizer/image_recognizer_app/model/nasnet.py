@@ -9,6 +9,8 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft.
 #
+import shutil
+
 from .model import Model
 from keras.applications.nasnet import NASNetLarge
 from keras.applications.nasnet import preprocess_input
@@ -39,4 +41,4 @@ class NasNet(Model):
         # Select the first two predictions
         pred_class = decode_predictions(preds, top=2)[0][0]
 
-        return [(pred_class[1], pred_class[2])]
+        return [pred_class[1], round(float(pred_class[2]), 2)]

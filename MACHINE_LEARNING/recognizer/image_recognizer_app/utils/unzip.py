@@ -27,8 +27,8 @@ class Unzip:
             raise Exception("Not valid file path to unzip")
         try:
             with ZipFile('/'.join((path, filename)), 'r') as zipObj:
-                folder = zipObj.namelist()[0]
-                zipObj.extractall(path)
-            return '/'.join((path, folder))
+                os.mkdir(path+'/'+filename[:-4])
+                zipObj.extractall('/'.join((path, filename[:-4])))
+            return '/'.join((path, filename[:-4]))
         except BadZipFile as error:
             raise ZipException(error, "Please upload a valid zip file.")
