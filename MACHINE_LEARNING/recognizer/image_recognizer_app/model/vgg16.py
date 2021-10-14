@@ -37,4 +37,4 @@ class Vgg16(Model):
         processed_image = preprocess_input(image_batch)
         preds = self.model.predict(processed_image)
         pred_class = decode_predictions(preds)[0][0]
-        return [(pred_class[1], pred_class[2])]
+        return [(pred_class[1], round(float(pred_class[2]), 2))]
