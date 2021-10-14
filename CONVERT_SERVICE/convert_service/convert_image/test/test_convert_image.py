@@ -17,6 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent
 
 
 class TestImageConverter(TestCase):
+    """Class to test functions of the library to convert images, using some effects or dimensions changes"""
     def test_convert_blur(self):
         filepath = str(BASE_DIR) + '/resources_test/image_test/google.jpg'
         with Image(filename=filepath) as img:
@@ -56,6 +57,5 @@ class TestImageConverter(TestCase):
             height = 500
             img.resize(width, height)
             current = str(img)
-            print(current)
             expected = "<wand.image.Image: 1b2a8e8 'JPEG' (1000x500)>"
             self.assertEqual(current, expected)
