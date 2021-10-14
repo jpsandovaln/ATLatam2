@@ -23,7 +23,7 @@ class Prediction:
     """Performs object detection on all images in a directory"""
 
     def __init__(self, folder, word, percentage):
-        self.models = {'nasnet': NasNet(), 'resnet': ResNet(), 'vgg': Vgg16(), 'yolo': Yolo()}
+        self.models = {'nasnet': NasNet(), 'resnet': ResNet(), 'vgg16': Vgg16(), 'yolo': Yolo()}
         self.folder = folder
         self.word = word
         self.confidence = float(percentage)
@@ -51,6 +51,6 @@ class Prediction:
         try:
             name_img = int(name_img[:index])
         except ValueError as error:
-            raise FileException(error, "The name of the files should only number to be converted into time format.")
+            raise FileException(error, "The name of the files should be number only to be converted into time format.")
 
         return str(datetime.timedelta(seconds=name_img))

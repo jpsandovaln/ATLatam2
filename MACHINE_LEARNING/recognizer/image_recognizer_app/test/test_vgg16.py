@@ -1,5 +1,5 @@
 #
-# @test_nasnet.py Copyright (c) 2021 Jalasoft.
+# @test_vgg16.py Copyright (c) 2021 Jalasoft.
 # Cl 26 Sur #48-41, Ayurá Center Edificio Union № 1376, Medellín, Colombia.
 # All rights reserved.
 #
@@ -11,18 +11,18 @@
 #
 from unittest import TestCase
 from pathlib import Path
-from ..model.nasnet import NasNet
+from ..model.vgg16 import Vgg16
 
 
-class TestNasnet(TestCase):
-    """" Unitary Test for Nasnet class"""
+class TestVgg16(TestCase):
+    """Unitary Tests for Vgg16 class"""
     # Positive case
-    def test_nas_net(self):
+    def test_vgg16(self):
         BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent
-        filepath = str(BASE_DIR) + '/resources_test/ml_image_test/001.jpg'
-        d = NasNet()
+        filepath = str(BASE_DIR) + '/resources_test/ml_image_test/2.jpg'
+        d = Vgg16()
         d.start()
         result = d.predict(filepath)
-        expected = [('Eskimo_dog', float(0.57))]
+        expected = [('Egyptian_cat', float(0.72))]
 
         self.assertListEqual(expected, result)

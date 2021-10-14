@@ -41,6 +41,6 @@ class Recognizer(View):
             error = ErrorResponse(error)
             return HttpResponse(json.dumps(error.get_dictionary_machine_learning()), 'application/json', status=error.get_status())
 
-       # except Exception as error:
-        #    error = ErrorResponse(error)
-         #   return HttpResponse(json.dumps(error.get_dictionary_general()), 'application/json', status=500)
+        except Exception as error:
+            error = ErrorResponse(error)
+            return HttpResponse(json.dumps(error.get_dictionary_general()), 'application/json', status=500)
