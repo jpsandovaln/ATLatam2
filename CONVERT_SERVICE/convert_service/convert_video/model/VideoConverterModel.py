@@ -1,5 +1,5 @@
 #
-# @videoConverterModel.py Copyright (c) 2021 Jalasoft.
+# @VideoConverterModel.py Copyright (c) 2021 Jalasoft.
 # 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
 # All rights reserved.
 #
@@ -12,11 +12,10 @@
 
 
 class VideoConverterModel:
-    """ Video converter """
+    """ Video converter, allows you to combine one or two videos from 5 different options """
 
-    # Function that modifies a video in different aspects
     def GetCommandsForVideo(self,
-                            BASE_DIR: str,
+                            base_dir: str,
                             sessionkey: str,
                             vf_horizontally: bool,
                             vf_vertically: bool,
@@ -30,13 +29,13 @@ class VideoConverterModel:
         cmd_ffmpeg = 'ffmpeg -i '
 
         # First output
-        output = str(BASE_DIR) + "/media/" + sessionkey + '_output'
+        output = str(base_dir) + "/media/" + sessionkey + '_output'
         # Final Output
         finaloutput = None
 
         commands = []
 
-        # 1 Stack Videos Horizontally
+        # 1 Stack two Videos Horizontally
         if vf_horizontally == True:
             cmd = cmd_ffmpeg + input1 + ' -i ' + input2 + ' -filter_complex hstack=inputs=2 ' + output + '.mp4'
             input1 = output + ".mp4"
@@ -44,7 +43,7 @@ class VideoConverterModel:
             output = output + '1'
             commands.append(cmd)
 
-        # 2 Stack Videos Vertically
+        # 2 Stack two Videos Vertically
         if vf_vertically == True:
             cmd = cmd_ffmpeg + input1 + ' -i ' + input2 + ' -filter_complex vstack=inputs=2 ' + output + '.mp4'
             input1 = output + ".mp4"
@@ -60,10 +59,11 @@ class VideoConverterModel:
             output = output + '3'
             commands.append(cmd)
 
-        # 0 = 90 Counter clockwise and Vertical Flip (default)
-        # 1 = 90 Clockwise
-        # 2 = 90 CounterClockwise
-        # 3 = 90 Clockwise and Vertical Flip
+        """ 4 Rotate a video clockwise
+              0 = 90 Counter clockwise and Vertical Flip (default)
+              1 = 90 Clockwise
+              2 = 90 CounterClockwise
+              3 = 90 Clockwise and Vertical Flip"""
         if vf_rotate == True:
             if int(vf_percentage) == 2:
                 vf_str_percentage = str(vf_percentage)
@@ -78,7 +78,7 @@ class VideoConverterModel:
             output = output + '4'
             commands.append(cmd)
 
-        # Reduce the video to 480p
+        # 5 Reduce the video to 480p
         if vf_reduce_video == True:
             cmd = cmd_ffmpeg + input1 + ' -vf scale=220:240 -preset slow -crf 18 ' + output + '.mp4'
             input1 = output + ".mp4"
@@ -88,6 +88,6 @@ class VideoConverterModel:
 
         # Rename the final file
         if len(commands) > 0:
-            commands.append('rename|' + finaloutput.replace('\\', '/') + '.mp4|' + str(BASE_DIR).replace('\\',
-                                                                                                         '/') + "/media/" + sessionkey + '.mp4')
+            commands.append('rename|' + finaloutput.replace('\\', '/') + '.mp4|' + str(base_dir).replace('\\',
+                            '/') + "/media/" + sessionkey + '.mp4')
         return commands
