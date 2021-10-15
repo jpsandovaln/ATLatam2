@@ -8,6 +8,8 @@ from .exception.compiler_exception import CompilerException
 from .model.compiler_facade import CompilerFacade
 from django.core.files.storage import FileSystemStorage
 
+from .model.execute_win import ExecuteWin
+
 
 class Compiler(View):
 
@@ -19,7 +21,7 @@ class Compiler(View):
             language = request.POST['language']
             version = request.POST['version']
             result = CompilerFacade.compile(language, 'D:/code/EjemploJava8.java', 'D:/code/ ',
-                                            'C:/"Program Files"/Java/jdk1.8.0_251/bin/')
+                                            'C:/"Program Files"/Java/jdk1.8.0_251/bin/', ExecuteWin())
             return HttpResponse(result, "application/json")
         except CompilerException as error:
             return HttpResponse(error, status=error.status)
