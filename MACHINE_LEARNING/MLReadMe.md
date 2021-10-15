@@ -1,6 +1,7 @@
-#Machine Learning App with Docker
+<h1>Machine Learning App with Docker</h1>
 Follow this readme to put the machine learning app into a docker container. Feel free to optimize the docker instructions inside DOCKERFILE, docker-compose.yml and other files.
-##- Docker Installation on Windows(Oct-2021)
+
+<h2>- Docker Installation on Windows(Oct-2021)</h2>
 
 To use docker and docker-compose we need to install docker desktop from the bellow link.
 We should follow the installation instructions and check if our machine meets the specified requirements described in the page.
@@ -21,7 +22,7 @@ Once docker is ready you can follow the Quick Start Guide to verify everything i
 
 **********************************************************************************
 
-##- Dockerize Machine Learning App
+<h2>- Dockerize Machine Learning App</h2>
 
 The machine learning module contain the necessary files to dockerize it, this files are:
 
